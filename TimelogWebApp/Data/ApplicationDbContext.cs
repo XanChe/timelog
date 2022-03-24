@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Timelog.WebApp.Models;
 
-namespace TimelogWebApp.Data
+namespace Timelog.WebApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
