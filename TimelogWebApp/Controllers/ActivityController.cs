@@ -20,13 +20,18 @@ namespace TimelogWebApp.Controllers
         private TimelogComponent timelogService;
         private UserActivityService activityManager;       
         
-        public ActivityController(TimelogComponent component, UserManager<User> userManager)
+        public ActivityController(TimelogComponent component, IHttpContextAccessor contextAccessor, UserManager<User> userManager)
         {
-            timelogService = component;            
-            var userUniqId = userManager.GetUserId(this.User);
+            timelogService = component;
+            if (contextAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(contextAccessor));
+            }
+
+            ClaimsPrincipal userClaims = contextAccessor.HttpContext.User;
+            var userUniqId = userManager.GetUserId(userClaims);
             timelogService.UseUserFilter(new Guid(userUniqId));
-            activityManager = timelogService.CreateUserActivityService();          
-            
+            activityManager = timelogService.CreateUserActivityService();  
         }
 
         public IActionResult Index()

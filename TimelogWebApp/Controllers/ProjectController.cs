@@ -5,30 +5,23 @@ using System.Security.Claims;
 using Timelog.CoreComponent;
 using Timelog.Entities;
 using Timelog.Services;
+using Timelog.WebApp.Services;
 
 namespace TimelogWebApp.Controllers
 {
     public class ProjectController : Controller
     {
-        private TimelogComponent timelogComponet;
-        private EntityService<Project> projectService;
-        private ClaimsPrincipal UserByService;
+        private TimelogComponent _timelogService;
+        private EntityService<Project> _projectManager;
 
-        public ProjectController(TimelogComponent component, IHttpContextAccessor contextAccessor)
+        public ProjectController(TimelogAspService timelogAspService)
         {
-            timelogComponet = component;
-            UserByService = contextAccessor.HttpContext.User;
-            if (UserByService != null)
-            {
-                var userGuid = UserByService.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                timelogComponet.UseUserFilter(new Guid(userGuid));
-                projectService = timelogComponet.CreateProjectService();
-            }
-
+            _timelogService = timelogAspService.TimelogService;
+            _projectManager = _timelogService.CreateProjectService();
         }
         public IActionResult Index()
         {
-            return View(projectService.GetItems());
+            return View(_projectManager.GetItems());
         }
 
         [HttpPost]
@@ -36,7 +29,7 @@ namespace TimelogWebApp.Controllers
         {
             if (newProject != null)
             {
-                projectService.Add(newProject);
+                _projectManager.Add(newProject);
                 return RedirectToAction("Index");
             }
             return View(newProject);
