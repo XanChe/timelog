@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 using Timelog.CoreComponent;
 using Timelog.Entities;
 using Timelog.Interfaces;
+using Timelog.WebApp.Models;
+using Timelog.WebApp.Services;
 using TimelogWebApp.Controllers;
 using Xunit;
 
@@ -17,18 +20,15 @@ namespace Tests.Timelog.WebApp
 {
     public class ProjectControllerTests
     {
-       
-        private ClaimsPrincipal User;
-        private IHttpContextAccessor httpContextAccessor;
+
+
+        private UserManager<User> _mockUserManagerr;
+        private IHttpContextAccessor _httpContextAccessor;
 
         public ProjectControllerTests()
         {
-            
-            var mockContextAcsesor = new Mock<IHttpContextAccessor>();
-
-            mockContextAcsesor.Setup(x => x.HttpContext.User).Returns(User);
-
-            httpContextAccessor = mockContextAcsesor.Object;
+            _httpContextAccessor = ControllerInitHelper.GetFailContextAccessor();
+            _mockUserManagerr = ControllerInitHelper.GetFailUserManager();
         }
 
         [Fact]
@@ -38,7 +38,8 @@ namespace Tests.Timelog.WebApp
             mockRepository.Setup(x => x.GetAll()).Returns(GetTestProjects());
 
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
-            var controller = new ProjectController(new TimelogComponent(repoManager), httpContextAccessor);
+            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var controller = new ProjectController(timelogAspService);
 
             //Action
             var result = controller.Index();
@@ -54,7 +55,8 @@ namespace Tests.Timelog.WebApp
         {
             var mockRepository = new Mock<IRepositoryGeneric<Project>>();
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
-            var controller = new ProjectController(new TimelogComponent(repoManager), httpContextAccessor);
+            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var controller = new ProjectController(timelogAspService);
 
             var project = new Project() { Name = "Test Project", Description = "eazy" };
 

@@ -12,31 +12,19 @@ using System.Linq;
 using System;
 using Timelog.WebApp.Models;
 using Timelog.Entities;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
 
 namespace Tests.Timelog.WebApp
 {
     public class TimelogControllerTests
     {    
-        private UserManager<User> _userManagerr;
-
-        public TimelogControllerTests()
+        private UserManager<User> _mockUserManagerr;
+        private IHttpContextAccessor _httpContextAccessor;
+        public  TimelogControllerTests()
         {
-            //timelogService = new TimelogComponent(options => options.UseNpgsql("Host=localhost;Port=5432;Database=test_timelog_db2;Username=tester;Password=formatmeplz"));
-            /*var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, "fffff@kdkd.ru"),
-                new Claim(ClaimTypes.NameIdentifier, "0b47afbc-7ccf-48cb-8d40-bbbe3577acb1")
-            };
-            claimsIdentity = new ClaimsIdentity(claims);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);*/
-
-            var mockUserManager = new Mock<UserManager<User>>();
-
-            mockUserManager.Setup(x => x.GetUserId(It.IsAny<ClaimsPrincipal>())).Returns("4e7270f5-1a2f-470b-913f-bace90193be9");
-
-            _userManagerr = mockUserManager.Object;
-
-
+            _httpContextAccessor = ControllerInitHelper.GetFailContextAccessor();
+            _mockUserManagerr = ControllerInitHelper.GetFailUserManager();
         }
         [Fact]
         public void IndexReturnViewResultAListOfUserActivities() 
@@ -45,7 +33,7 @@ namespace Tests.Timelog.WebApp
             mockRepository.Setup(x => x.GetAll()).Returns(GetTestActivities());
             
             var _repoManager = mockRepoManagerWithActivities(mockRepository.Object);
-            var controller = new ActivityController(new TimelogComponent(_repoManager), _userManagerr);
+            var controller = new ActivityController(new TimelogComponent(_repoManager), _httpContextAccessor, _mockUserManagerr);            
 
             //Action
             var result = controller.Index();
@@ -64,7 +52,7 @@ namespace Tests.Timelog.WebApp
 
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
 
-            var controller = new ActivityController(new TimelogComponent(repoManager), _userManagerr);
+            var controller = new ActivityController(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
 
 
             //Action
@@ -85,7 +73,7 @@ namespace Tests.Timelog.WebApp
 
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
 
-            var controller = new ActivityController(new TimelogComponent(repoManager), _userManagerr);
+            var controller = new ActivityController(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
 
             var activity = new UserActivityModel()
             {
