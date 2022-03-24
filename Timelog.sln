@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.WebApp", "TimelogWebApp\Timelog.WebApp.csproj", "{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogDbLayer", "TimelogCore\TimelogDbLayer.csproj", "{618DF962-BD78-4412-8B4A-B7382C086CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogCore", "TimelogCore\TimelogCore.csproj", "{618DF962-BD78-4412-8B4A-B7382C086CE0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreComponent", "ActivityComponent\CoreComponent.csproj", "{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}"
 EndProject

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TimelogWebApp.Data;
+using Timelog.WebApp.Data;
 using Timelog.WebApp.Models;
+using Timelog.CoreComponent;
+using Timelog.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddTimelogComponent(connectionString);
+builder.Services.AddScoped<TimelogAspService>();
+
 builder.Services.AddControllersWithViews();
+
+
 
 var app = builder.Build();
 

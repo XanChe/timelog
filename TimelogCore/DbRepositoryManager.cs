@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Timelog.Repositories;
 using Timelog.Entities;
 using Timelog.Interfaces;
+using Timelog.EF;
 
 namespace Timelog
 {
@@ -17,7 +18,7 @@ namespace Timelog
         private readonly DbRepositoryGeneric<Project> _projectRepository;
         private readonly DbRepositoryGeneric<ActivityType> _activityTypeRepository;
         private readonly DbRepositoryActivity _activityRepository;
-        public DbRepositoryManager(DbContext context)
+        public DbRepositoryManager(TimelogDbContext context)
         {
             this._context = context;                        
             _projectRepository = new DbRepositoryGeneric<Project>(_context);
