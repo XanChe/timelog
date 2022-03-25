@@ -1,0 +1,19 @@
+﻿
+@model List<UserActivityModel>
+
+@using(Html.BeginForm("Start", "Activity", FormMethod.Post))
+{
+    <p>
+        <label>Проект</label>
+        @Html.DropDownList("projectid", ViewBag.Projects as SelectList)
+        <label>Тип активности</label>
+        @Html.DropDownList("activityTypeId", ViewBag.ActivityTypes as SelectList)
+        <input type="submit" value="Старт!" />
+    </p>
+}
+<ul>
+    @foreach (var activity in Model)
+    {
+        <li>@activity.StartTime</li>
+    }
+</ul>
