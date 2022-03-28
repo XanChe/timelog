@@ -19,20 +19,47 @@ namespace Timelog.Repositories
         public UserActivityModel getCurrentActivity()
         {
             //isUserConfigured();
-            return items
-                .Where(x => x.UserUniqId == UserGuid)
-                .Where(a => a.Status != UserActivityModel.ActivityStatus.Complite)
-                .OrderByDescending(a => a.StartTime)
+            var projects = _context.Set<Project>();
+            var activityTypes = _context.Set<ActivityType>();
+            var row = items
+                .Join(projects, a => a.ProjectId, p => p.Id, (activity, project) => new { activity, project })
+                .Join(activityTypes, a => a.activity.ActivityTypeId, aType => aType.Id, (row, activityType) => new
+                {
+                    row.activity,
+                    row.project,
+                    activityType
+                })
+                .Where(x => x.activity.UserUniqId == UserGuid)
+                .Where(x => x.activity.Status != UserActivityModel.ActivityStatus.Complite)
+                .OrderByDescending(a => a.activity.StartTime)
                 .FirstOrDefault();
+            var currentActivity = row?.activity;
+            if (currentActivity != null)
+            {
+                currentActivity.Project = row.project;
+                currentActivity.ActivityType = row.activityType;
+            }
+
+            return currentActivity;
+        }
+
+        public override IEnumerable<UserActivityModel> GetAll()
+        {
+            //isUserConfigured();
+            var projects = _context.Set<Project>();
+            var activityTypes = _context.Set<ActivityType>();
+            return items
+            .Join(projects, a => a.ProjectId, p => p.Id, (activity, project) => new { activity, project })
+            .Join(activityTypes, a => a.activity.ActivityTypeId, aType => aType.Id, (row, activityType) => new
+            {
+                row.activity,
+                row.project,
+                activityType
+            })
+            .Where(x => x.activity.UserUniqId == UserGuid)
+            .Select(row => new UserActivityModel(row.activity, row.project, row.activityType));
         }
 
 
-        //private void isUserConfigured()
-        //{
-        //    if (userGuid == null)
-        //    {
-        //        throw new Exception("the user is not configured");
-        //    }
-        //}
     }
 }

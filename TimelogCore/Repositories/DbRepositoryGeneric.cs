@@ -38,7 +38,7 @@ namespace Timelog.Repositories
             this.items = context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return Items;
         }
@@ -66,7 +66,8 @@ namespace Timelog.Repositories
         }
 
         public void Update(T item)
-        {            
+        {
+            item.UserUniqId = userGuid;
             items.Update(item);
         }
 
