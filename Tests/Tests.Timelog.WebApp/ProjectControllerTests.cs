@@ -13,8 +13,9 @@ using Timelog.Entities;
 using Timelog.Interfaces;
 using Timelog.WebApp.Models;
 using Timelog.WebApp.Services;
-using TimelogWebApp.Controllers;
+using Timelog.WebApp.Controllers;
 using Xunit;
+using Microsoft.Extensions.Primitives;
 
 namespace Tests.Timelog.WebApp
 {
@@ -59,16 +60,21 @@ namespace Tests.Timelog.WebApp
             var controller = new ProjectController(timelogAspService);
 
             var project = new Project() { Name = "Test Project", Description = "eazy" };
-
+            var valueDictionary = new Dictionary<string, StringValues>()
+            {
+                { "Name", "Test Project" },
+                { "Description", "eazy"}
+            };
+            var formItems = new FormCollection(valueDictionary);
             //Action
-            var result = controller.Add(project);
+            var result = controller.Create(formItems);
 
             // Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Null(redirectToActionResult.ControllerName);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
-            mockRepository.Verify(r => r.Create(project));            
+            mockRepository.Verify(r => r.Create(It.IsAny<Project>()));            
         }
         private IRepositoryManager mockRepoManagerWithActivities(IRepositoryGeneric<Project> repository)
         {

@@ -8,6 +8,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Timelog.Entities;
+using Timelog.Interfaces;
 using Timelog.WebApp.Models;
 
 namespace Tests.Timelog.WebApp
@@ -41,6 +43,67 @@ namespace Tests.Timelog.WebApp
             mockContextAcsesor.Setup(x => x.HttpContext.User).Returns(claimsPrincipal);
 
             return mockContextAcsesor.Object;
+        }
+
+        public static IRepositoryManager mockRepoManagerWithActivities(IRepositoryActivity repositoryActivity)
+        {
+           
+            var repositoryActivityType = new Mock<IRepositoryGeneric<ActivityType>>();
+            repositoryActivityType.Setup(x => x.GetAll()).Returns(GetTestActivityTypes());
+
+            var repositoryProject = new Mock<IRepositoryGeneric<Project>>();
+            repositoryProject.Setup(x => x.GetAll()).Returns(GetTestProjects());
+
+            var mock = new Mock<IRepositoryManager>();
+            mock.Setup(x => x.Activities).Returns(repositoryActivity);
+            mock.Setup(x => x.Projects).Returns(repositoryProject.Object);
+            mock.Setup(x => x.ActivityTypes).Returns(repositoryActivityType.Object);
+
+            return mock.Object;
+        }
+
+        public static IRepositoryManager mockRepoManagerWithActivities()
+        {
+            var repositoryActivity = new Mock<IRepositoryActivity>();
+            repositoryActivity.Setup(x => x.GetAll()).Returns(GetTestActivities());
+
+            var repositoryActivityType = new Mock<IRepositoryGeneric<ActivityType>>();
+            repositoryActivityType.Setup(x => x.GetAll()).Returns(GetTestActivityTypes());
+
+            var repositoryProject = new Mock<IRepositoryGeneric<Project>>();
+            repositoryProject.Setup(x => x.GetAll()).Returns(GetTestProjects());
+
+            var mock = new Mock<IRepositoryManager>();
+            mock.Setup(x => x.Activities).Returns(repositoryActivity.Object);
+            mock.Setup(x => x.Projects).Returns(repositoryProject.Object);
+            mock.Setup(x => x.ActivityTypes).Returns(repositoryActivityType.Object);
+
+            return mock.Object;
+        }
+        private static IEnumerable<UserActivityModel> GetTestActivities()
+        {
+            return new List<UserActivityModel>()
+            {
+                new UserActivityModel { Title = "First action", Status = UserActivityModel.ActivityStatus.Complite},
+                new UserActivityModel { Title = "Second action", Status = UserActivityModel.ActivityStatus.Started}
+            };
+        }
+        private static IEnumerable<Project> GetTestProjects()
+        {
+            return new List<Project>()
+            {
+                new Project { Name = "First project", Id = 1 },
+                new Project { Name = "Second project", Id = 2 }
+            };
+        }
+
+        private static IEnumerable<ActivityType> GetTestActivityTypes()
+        {
+            return new List<ActivityType>()
+            {
+                new ActivityType { Name = "First Type", Id = 1 },
+                new ActivityType { Name = "Second Type", Id = 2 }
+            };
         }
     }
 }
