@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Timelog.EF;
@@ -11,9 +12,10 @@ using Timelog.EF;
 namespace Timelog.WebApp.Migrations
 {
     [DbContext(typeof(TimelogDbContext))]
-    partial class TimelogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220328034046_TimelogActivityAddTypeReferens")]
+    partial class TimelogActivityAddTypeReferens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

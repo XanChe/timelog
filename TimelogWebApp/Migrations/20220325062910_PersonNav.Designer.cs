@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Timelog.EF;
@@ -11,9 +12,10 @@ using Timelog.EF;
 namespace Timelog.WebApp.Migrations
 {
     [DbContext(typeof(TimelogDbContext))]
-    partial class TimelogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220325062910_PersonNav")]
+    partial class PersonNav
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,8 +111,6 @@ namespace Timelog.WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityTypeId");
-
                     b.HasIndex("ProjectId");
 
                     b.ToTable("UserActivities");
@@ -118,19 +118,11 @@ namespace Timelog.WebApp.Migrations
 
             modelBuilder.Entity("Timelog.Entities.UserActivityModel", b =>
                 {
-                    b.HasOne("Timelog.Entities.ActivityType", "ActivityType")
-                        .WithMany()
-                        .HasForeignKey("ActivityTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Timelog.Entities.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ActivityType");
 
                     b.Navigation("Project");
                 });
