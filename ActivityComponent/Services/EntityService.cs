@@ -13,12 +13,17 @@ namespace Timelog.Services
         {
             _repository = repository;
         }
-        public IEnumerable<T> GetItems()
+        public IEnumerable<T> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public void Add(T item)
+        public T GetById(long Id)
+        {
+            return _repository.Read(Id);
+        }
+
+        public void Create(T item)
         {
             if (item == null)
             {
@@ -35,6 +40,11 @@ namespace Timelog.Services
                 throw new ArgumentNullException("updated item is empty");
             }
             _repository.Update(item);
+            _repository.SaveChanges();
+        }
+        public void Delete(long id)
+        {
+            _repository.Delete(id);
             _repository.SaveChanges();
         }
     }

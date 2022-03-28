@@ -6,14 +6,20 @@ using Timelog.Entities;
 
 namespace Timelog.Services
 {
-    public class UserActivityService
+    public class UserActivityService: EntityService<UserActivityModel>
     {
         private IRepositoryActivity _repository;
        
-        public UserActivityService(IRepositoryActivity repository)
+        public UserActivityService(IRepositoryActivity repository):base(repository)
         {            
             _repository = repository;            
         }
+
+        //public UserActivity GetActivityById(long Id)
+        //{
+        //    return _repository.Read(Id);
+        //}
+
         public void StopPreviousActivityIfExist()
         {
             UserActivity currentActivity = _repository.getCurrentActivity();
@@ -50,6 +56,8 @@ namespace Timelog.Services
             {
                 currentActivity.Comment = comment;
                 currentActivity.Stop();
+                _repository.Update(currentActivity);
+                _repository.SaveChanges();
             }
         }
 
