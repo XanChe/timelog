@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Timelog.Core.ViewModels.ProjectStatisticsViewModel>
+
+@{
+    ViewData["Title"] = "Статистика по проектам";
+}
+
+<h1>ByProject</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DurationInSecondsTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DurationInSecondsAvarage)
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DurationInSecondsTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DurationInSecondsAvarage)
+            </td>            
+        </tr>}
+    </tbody>
+</table>

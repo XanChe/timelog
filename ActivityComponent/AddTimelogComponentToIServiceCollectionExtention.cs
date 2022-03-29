@@ -4,7 +4,7 @@ using System;
 using Timelog.EF;
 using Timelog.Interfaces;
 
-namespace Timelog.CoreComponent
+namespace Timelog.Services
 {
     public static class AddTimelogComponentToIServiceCollectionExtention
     {
@@ -16,7 +16,7 @@ namespace Timelog.CoreComponent
             }
             services.AddDbContext<TimelogDbContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IRepositoryManager, DbRepositoryManager>();
-            services.AddScoped<TimelogComponent>();           
+            services.AddScoped<TimelogServiceBuilder>();           
             return services;               
         }
     }

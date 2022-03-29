@@ -1,16 +1,14 @@
 ﻿using System;
 using Timelog.Entities;
 using Timelog.Interfaces;
-using Timelog.Services;
-using Microsoft.EntityFrameworkCore;
 
-namespace Timelog.CoreComponent
+namespace Timelog.Services
 {
-    public class TimelogComponent
+    public class TimelogServiceBuilder
     {
         private readonly IRepositoryManager repositoryManager;
        
-        public TimelogComponent(IRepositoryManager manager)
+        public TimelogServiceBuilder(IRepositoryManager manager)
         {
            repositoryManager = manager;
         }
@@ -18,6 +16,11 @@ namespace Timelog.CoreComponent
         public void UseUserFilter(Guid userIdentityGuid)
         {
             repositoryManager.UseUserFilter(userIdentityGuid);
+        }
+
+        public StatisticsService CreateStatisticsService()
+        {
+            return new StatisticsService(repositoryManager.Satistics);
         }
 
         public UserActivityService CreateUserActivityService()

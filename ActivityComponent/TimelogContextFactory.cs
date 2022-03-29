@@ -6,7 +6,7 @@ using System.Text;
 using Timelog.EF;
 
 
-namespace Timelog.CoreComponent
+namespace Timelog.Services
 {
     class TimelogContextFactory : IDesignTimeDbContextFactory<TimelogDbContext>
     {

@@ -2,16 +2,14 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Timelog.CoreComponent;
+using Timelog.Services;
 using Timelog.Interfaces;
 using Timelog.Entities;
 using Timelog.Repositories;
 using Timelog.Services.Entities;
 using Moq;
-using Moq.EntityFrameworkCore;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Timelog.Services;
+
 
 namespace Tests.Timelog.Component
 {

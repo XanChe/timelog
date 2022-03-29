@@ -16,7 +16,7 @@ namespace Timelog.Services
         }
         private IRepositoryActivity _repositoryActivity;        
 
-        private SaverStyle databaseSaverStyle = SaverStyle.SINGLE_SAVE;
+        //private SaverStyle databaseSaverStyle = SaverStyle.SINGLE_SAVE;
 
         public UserActivityBilder(IRepositoryActivity repository)
         {

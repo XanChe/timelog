@@ -1,0 +1,50 @@
+﻿@model Timelog.Core.ViewModels.TotalStatisticsVewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ActivityType</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstActivity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstActivity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastActivity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastActivity)
+        </dd> 
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DurationInSecondsTotal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DurationInSecondsTotal)
+        </dd>  
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DurationInSecondsAvarage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DurationInSecondsAvarage)
+        </dd>  
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DurationInSecondsMax)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DurationInSecondsMax)
+        </dd>  
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DurationInSecondsMin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DurationInSecondsMin)
+        </dd>  
+    </dl>
+</div>

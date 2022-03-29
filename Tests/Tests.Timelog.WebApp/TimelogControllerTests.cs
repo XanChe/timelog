@@ -1,9 +1,7 @@
 ﻿using Xunit;
 using TimelogWebApp.Controllers;
-using Timelog.CoreComponent;
+using Timelog.Services;
 using Timelog.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using Moq;
@@ -14,7 +12,7 @@ using Timelog.WebApp.Models;
 using Timelog.Entities;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
-using Timelog.WebApp.Services;
+
 
 namespace Tests.Timelog.WebApp
 {
@@ -34,7 +32,7 @@ namespace Tests.Timelog.WebApp
             var mockRepository = new Mock<IRepositoryActivity>();
             var repoManager = ControllerInitHelper.mockRepoManagerWithActivities(mockRepository.Object);
 
-            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);
 
             //Action
@@ -51,7 +49,7 @@ namespace Tests.Timelog.WebApp
             mockRepository.Setup(x => x.GetAll()).Returns(GetTestActivities());
             
             var _repoManager = ControllerInitHelper.mockRepoManagerWithActivities();
-            var timelogAspService = new TimelogAspService(new TimelogComponent(_repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(_repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);            
 
             //Action
@@ -71,7 +69,7 @@ namespace Tests.Timelog.WebApp
 
             var repoManager = ControllerInitHelper.mockRepoManagerWithActivities(mockRepository.Object);
 
-            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);
 
 
@@ -93,7 +91,7 @@ namespace Tests.Timelog.WebApp
 
             var repoManager = ControllerInitHelper.mockRepoManagerWithActivities(mockRepository.Object);
 
-            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);
             //Action
             var result = controller.Stop("Stop Comment");

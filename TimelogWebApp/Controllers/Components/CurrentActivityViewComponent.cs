@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Timelog.CoreComponent;
-using Timelog.Entities;
 using Timelog.Services;
-using Timelog.WebApp.Services;
+using Timelog.Entities;
 
 namespace Timelog.WebApp.Controllers.Components
 {
     public class CurrentActivity:ViewComponent
     {
-        private TimelogComponent _timelogService;
+        private TimelogServiceBuilder _timelogService;
         private UserActivityService _activityManager;
 
         public CurrentActivity(TimelogAspService timelogAspService)

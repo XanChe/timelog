@@ -4,19 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Timelog.CoreComponent;
 using Timelog.Services;
 using Timelog.Entities;
-using Timelog.WebApp.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Timelog.EF;
 
 namespace TimelogWebApp.Controllers
 {
     [Authorize]
     public class ActivityController: Controller
     {
-        private TimelogComponent _timelogService;
+        private TimelogServiceBuilder _timelogService;
         private UserActivityService _activityManager;
 
         public ActivityController(TimelogAspService timelogAspService)

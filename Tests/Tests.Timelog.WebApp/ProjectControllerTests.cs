@@ -8,11 +8,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Timelog.CoreComponent;
+using Timelog.Services;
 using Timelog.Entities;
 using Timelog.Interfaces;
 using Timelog.WebApp.Models;
-using Timelog.WebApp.Services;
 using Timelog.WebApp.Controllers;
 using Xunit;
 using Microsoft.Extensions.Primitives;
@@ -39,7 +38,7 @@ namespace Tests.Timelog.WebApp
             mockRepository.Setup(x => x.GetAll()).Returns(GetTestProjects());
 
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
-            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ProjectController(timelogAspService);
 
             //Action
@@ -56,7 +55,7 @@ namespace Tests.Timelog.WebApp
         {
             var mockRepository = new Mock<IRepositoryGeneric<Project>>();
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
-            var timelogAspService = new TimelogAspService(new TimelogComponent(repoManager), _httpContextAccessor, _mockUserManagerr);
+            var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ProjectController(timelogAspService);
 
             var project = new Project() { Name = "Test Project", Description = "eazy" };

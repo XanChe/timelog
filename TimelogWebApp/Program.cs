@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Timelog.WebApp.Data;
 using Timelog.WebApp.Models;
-using Timelog.CoreComponent;
-using Timelog.WebApp.Services;
+using Timelog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -49,7 +47,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Activity}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

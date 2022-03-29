@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
 
-namespace Timelog.CoreComponent
+namespace Timelog.Services
 {
     public class TimelogComponentUnitTests
     {

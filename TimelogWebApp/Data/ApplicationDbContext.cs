@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Timelog.WebApp.Models;
-using Timelog.Entities;
-using Timelog.WebApp.ViewModels;
 
 namespace Timelog.WebApp.Data
 {

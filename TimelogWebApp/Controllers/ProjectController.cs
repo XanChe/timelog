@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Timelog.CoreComponent;
-using Timelog.Entities;
 using Timelog.Services;
-using Timelog.WebApp.Services;
+using Timelog.Entities;
 
 namespace Timelog.WebApp.Controllers
 {
     [Authorize]
     public class ProjectController : Controller
     {
-        private TimelogComponent _timelogService;
+        private TimelogServiceBuilder _timelogService;
         private EntityService<Project> _projectManager;
 
         public ProjectController(TimelogAspService timelogAspService)

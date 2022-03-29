@@ -18,17 +18,20 @@ namespace Timelog
         private readonly DbRepositoryGeneric<Project> _projectRepository;
         private readonly DbRepositoryGeneric<ActivityType> _activityTypeRepository;
         private readonly DbRepositoryActivity _activityRepository;
+        private readonly DbRepositiryStatistics _statisticsRepository;
         public DbRepositoryManager(TimelogDbContext context)
         {
             this._context = context;                        
-            _projectRepository = new DbRepositoryGeneric<Project>(_context);
-            _activityTypeRepository = new DbRepositoryGeneric<ActivityType>(_context);
-            _activityRepository = new DbRepositoryActivity(_context);
+            _projectRepository = new DbRepositoryGeneric<Project>(context);
+            _activityTypeRepository = new DbRepositoryGeneric<ActivityType>(context);
+            _activityRepository = new DbRepositoryActivity(context);
+            _statisticsRepository = new DbRepositiryStatistics(context);
         }
 
         public IRepositoryGeneric<Project> Projects { get { return _projectRepository; } }
         public IRepositoryGeneric<ActivityType> ActivityTypes { get { return _activityTypeRepository; } }
-        public IRepositoryActivity Activities { get { return _activityRepository; } }       
+        public IRepositoryActivity Activities { get { return _activityRepository; } }
+        public IRepositirySatistics Satistics { get { return _statisticsRepository; } }
 
         public void Dispose()
         {
@@ -45,6 +48,7 @@ namespace Timelog
             _projectRepository.SetUser(userIdentityGuid);
             _activityTypeRepository.SetUser(userIdentityGuid);
             _activityRepository.SetUser(userIdentityGuid);
+            _statisticsRepository.SetUser(userIdentityGuid);
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Timelog.CoreComponent;
-using Timelog.Entities;
 using Timelog.Services;
-using Timelog.WebApp.Services;
+using Timelog.Entities;
 
 namespace Timelog.WebApp.Controllers
 {
     [Authorize]
     public class ActivityTypeController : Controller
     {
-        private TimelogComponent _timelogService;
+        private TimelogServiceBuilder _timelogService;
         private EntityService<ActivityType> _activityTypeManager;
 
         public ActivityTypeController(TimelogAspService timelogAspService)

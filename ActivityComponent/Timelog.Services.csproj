@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimelogCore\TimelogCore.csproj" />
+    <ProjectReference Include="..\TimelogCore\Timelog.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@ namespace Timelog.Interfaces
         IRepositoryGeneric<ActivityType> ActivityTypes { get; }
         IRepositoryGeneric<Project> Projects { get; }
         IRepositoryActivity Activities { get; }
+        IRepositirySatistics Satistics { get; }
         void UseUserFilter(Guid userIdentityGuid);
         void SaveChanges();
     }
