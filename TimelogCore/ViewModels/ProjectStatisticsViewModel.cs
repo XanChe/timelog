@@ -9,6 +9,7 @@ namespace Timelog.Core.ViewModels
 {
     public class ProjectStatisticsViewModel: TotalStatisticsVewModel
     {
-        public Project Project { get; set; }
+        public string ProjectName { get; set; }
+        public long ProjectId { get; set; }
     }
 }

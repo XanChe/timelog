@@ -26,38 +26,39 @@ namespace Timelog.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProjectStatisticsViewModel> GetProjectStatsForPeriod(Project project, DateTime from, DateTime to)
+        public IEnumerable<ProjectStatisticsViewModel> GetProjectStatsForPeriod(Project project, DateTime fromDate, DateTime toDate)
         {
-            var filtredActivities = _context
-               .UserActivities
-               .Where(activity => activity.UserUniqId == userGuid)
-               .Where(activity => activity.StartTime > from && activity.EndTime < to)
-               .OrderBy(activity => activity.StartTime)
-               .Join(_context.Projects,
-                    a => a.ProjectId,
-                    p => p.Id,
-                    (activity, project) => new
-                    {
-                        Project = project,
-                        StartTime = activity.StartTime,
-                        EndTime = activity.EndTime,
-                        Duration = (activity.EndTime - activity.StartTime).TotalSeconds
-                    }
-               ).AsEnumerable()
-               .GroupBy(row => row.Project.Id);
+            
+            var items =
+                from a in _context.UserActivities
+                join p in _context.Projects on a.ProjectId equals p.Id
+                where a.UserUniqId == userGuid && fromDate <= a.StartTime && a.StartTime <= toDate
+                group a by new { a.ProjectId, p.Name } into agroup
+                select new
+                {                    
+                    ProjectName = agroup.Key.Name,
+                    ProjectId = agroup.Key.ProjectId,
+                    FirstActivity = agroup.Min(a => a.StartTime),
+                    LastActivity = agroup.Max(a => a.EndTime),
+                    ActivityCount = agroup.Count(),
+                    DurationInSecondsTotal = (long)agroup.Sum(a => (a.EndTime - a.StartTime).TotalSeconds),
+                    DurationInSecondsAvarage = (long)agroup.Average(a => (a.EndTime - a.StartTime).TotalSeconds),
+                    DurationInSecondsMin = (long)agroup.Min(a => (a.EndTime - a.StartTime).TotalSeconds),
+                    DurationInSecondsMax = (long)agroup.Max(a => (a.EndTime - a.StartTime).TotalSeconds)
+                };
 
-            foreach (var projectActivities in filtredActivities)
+            foreach (var projectActivities in items)
             {
                 var result = new ProjectStatisticsViewModel()
                 {
-                    Project = projectActivities.FirstOrDefault().Project,
-                    FirstActivity = projectActivities.First().StartTime,
-                    LastActivity = projectActivities.Last().EndTime,
-                    ActivityCount = projectActivities.Count(),
-                    DurationInSecondsTotal = (long)projectActivities.Sum(a => a.Duration),
-                    DurationInSecondsAvarage = (long)projectActivities.Average(a => a.Duration),
-                    DurationInSecondsMin = (long)projectActivities.Min(a => a.Duration),
-                    DurationInSecondsMax = (long)projectActivities.Max(a => a.Duration)
+                    ProjectName = projectActivities.ProjectName,
+                    FirstActivity = projectActivities.FirstActivity,
+                    LastActivity = projectActivities.LastActivity,
+                    ActivityCount = projectActivities.ActivityCount,
+                    DurationInSecondsTotal = projectActivities.DurationInSecondsTotal,
+                    DurationInSecondsAvarage = projectActivities.DurationInSecondsAvarage,
+                    DurationInSecondsMin = projectActivities.DurationInSecondsMin,
+                    DurationInSecondsMax = projectActivities.DurationInSecondsMax
 
                 };
                 yield return result;
