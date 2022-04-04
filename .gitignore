@@ -1,0 +1,7 @@
+.vs/
+obj/
+*.bat
+*.bak
+*.crt
+*.key
+*.pfx
