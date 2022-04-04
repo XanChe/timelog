@@ -7,15 +7,17 @@ namespace TimelogWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration appConfig)
         {
             _logger = logger;
+            _configuration = appConfig;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return Content(_configuration.GetConnectionString("DefaultConnection"));
         }
 
         public IActionResult Privacy()

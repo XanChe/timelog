@@ -26,8 +26,8 @@ namespace Timelog.Entities
             Started,
             Complite
         }
-       
-        [Display(Name="Начало")]
+
+        [Display(Name = "Начало")]
         public DateTime StartTime { get; set; }
         [Display(Name = "Окончание")]
         public DateTime EndTime { get; set; }
@@ -38,12 +38,14 @@ namespace Timelog.Entities
         [Display(Name = "Комментарий")]
         public string Comment { get; set; }
         public long ProjectId { get; set; }
-        [Display(Name = "Проект")]
+#nullable enable
+        [Display(Name = "Проект")] 
         public Project? Project { get; set; }
         [Display(Name = "Тип деятельности")]
-        public ActivityType? ActivityType { get; set; } 
+        public ActivityType? ActivityType { get; set; }
+#nullable restore
         public long ActivityTypeId { get; set; }
 
     }
-}  
+}
 
