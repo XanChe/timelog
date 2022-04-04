@@ -1,5 +1,7 @@
-.vs/
-obj/
+**/.vs
+**/obj
+**/bin
+/deploy
 *.bat
 *.bak
 *.crt
