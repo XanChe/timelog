@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Timelog.WebApp.Data;
 using Timelog.WebApp.Models;
 using Timelog.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -25,6 +26,9 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -1,0 +1,9 @@
+**/.vs
+**/obj
+**/bin
+/deploy
+*.bat
+*.bak
+*.crt
+*.key
+*.pfx
