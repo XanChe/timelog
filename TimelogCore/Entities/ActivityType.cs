@@ -5,9 +5,9 @@ namespace Timelog.Entities
 {
     public class ActivityType : Entity
     {
-        [Display(Name = "Название")]
+        [Display(Name = "РќР°Р·РІР°РЅРёРµ")]
         public string Name { get; set; }
-        [Display(Name = "Описание")]
+        [Display(Name = "РћРїРёСЃР°РЅРёРµ")]
         public string Description { get; set; }
 
     }

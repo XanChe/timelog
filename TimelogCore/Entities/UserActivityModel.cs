@@ -27,21 +27,21 @@ namespace Timelog.Entities
             Complite
         }
 
-        [Display(Name = "Начало")]
+        [Display(Name = "РќР°С‡Р°Р»Рѕ")]
         public DateTime StartTime { get; set; }
-        [Display(Name = "Окончание")]
+        [Display(Name = "РћРєРѕРЅС‡Р°РЅРёРµ")]
         public DateTime EndTime { get; set; }
-        [Display(Name = "Статус")]
+        [Display(Name = "РЎС‚Р°С‚СѓСЃ")]
         public ActivityStatus Status { get; set; } = ActivityStatus.Draft;
-        [Display(Name = "Заголовок")]
+        [Display(Name = "Р—Р°РіРѕР»РѕРІРѕРє")]
         public string Title { get; set; }
-        [Display(Name = "Комментарий")]
+        [Display(Name = "РљРѕРјРјРµРЅС‚Р°СЂРёР№")]
         public string Comment { get; set; }
         public long ProjectId { get; set; }
 #nullable enable
-        [Display(Name = "Проект")] 
+        [Display(Name = "РџСЂРѕРµРєС‚")] 
         public Project? Project { get; set; }
-        [Display(Name = "Тип деятельности")]
+        [Display(Name = "РўРёРї РґРµСЏС‚РµР»СЊРЅРѕСЃС‚Рё")]
         public ActivityType? ActivityType { get; set; }
 #nullable restore
         public long ActivityTypeId { get; set; }
