@@ -8,5 +8,6 @@
 *.key
 *.pfx
 DeployConfs/**nginx.conf
+DeployConfs/**localhost.conf
 DeployConfs/**secrets.json
 docker-compose.override.yml

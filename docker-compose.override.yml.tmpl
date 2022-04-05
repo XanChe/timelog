@@ -12,8 +12,8 @@ services:
     expose:      
       - 44392 
     volumes:
-      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-      - ./nginx/https:/root/.aspnet/https:ro
+      - ~/DeployConfigs/usersecrets:/root/.microsoft/usersecrets:ro
+      - ./DeployConfigs/https/localhost.pfx:/root/.aspnet/https/localhost.pfx      
     depends_on:
       - postgres_db
     networks:
@@ -22,11 +22,11 @@ services:
   proxy:
     image: nginx:latest
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/localhost.crt:/etc/nginx/localhost.crt
-      - ./nginx/localhost.key:/etc/nginx/localhost.key
+      - ./DeployConfigs/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./DeployConfigs/https/localhost.crt:/etc/nginx/localhost.crt
+      - ./DeployConfigs/https/localhost.key:/etc/nginx/localhost.key
     ports:
-      - 8080:80
+      - 80:80
       - 443:443
     depends_on:
       - timelog.dev
