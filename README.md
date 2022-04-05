@@ -9,7 +9,7 @@
 
 
 ## Развёртывание в docker
----
+
 - Разимыновываем шаблон docker-compose.override.yml.tmpl путём копирования:
 
         cp docker-compose.override.yml.tmpl docker-compose.override.yml
@@ -23,4 +23,4 @@
 
 - Поднимаем контейнеры:
 
-        sudo docker-compose uo -d
+        sudo docker-compose up -d
