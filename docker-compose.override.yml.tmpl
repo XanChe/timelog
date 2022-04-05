@@ -12,7 +12,7 @@ services:
     expose:      
       - 44392 
     volumes:
-      - ~/DeployConfigs/usersecrets:/root/.microsoft/usersecrets:ro
+      - ./DeployConfigs/usersecrets:/root/.microsoft/usersecrets:ro
       - ./DeployConfigs/https/localhost.pfx:/root/.aspnet/https/localhost.pfx      
     depends_on:
       - postgres_db
