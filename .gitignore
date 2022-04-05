@@ -7,3 +7,6 @@
 *.crt
 *.key
 *.pfx
+DeployConfs/**nginx.conf
+DeployConfs/**secrets.json
+docker-compose.override.yml
