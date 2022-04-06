@@ -17,7 +17,7 @@ namespace TimelogWebApp.Controllers
 
         public IActionResult Index()
         {
-            return Content(_configuration.GetConnectionString("DefaultConnection"));
+            return View();
         }
 
         public IActionResult Privacy()
