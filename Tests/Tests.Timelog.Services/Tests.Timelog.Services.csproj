@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ActivityComponent\Timelog.Services.csproj" />
+    <ProjectReference Include="..\..\ActivityComponent\TimelogServices.csproj" />
   </ItemGroup>
 
 </Project>

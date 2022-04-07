@@ -19,13 +19,13 @@ namespace Timelog.WebApp.Controllers
         // GET: ActivityTypeController
         public ActionResult Index()
         {
-            return View(_activityTypeManager.GetAll());
+            return View(_activityTypeManager.GetAllAsync());
         }
 
         // GET: ActivityTypeController/Details/5
         public ActionResult Details(long id)
         {
-            return View(_activityTypeManager.GetById(id));
+            return View(_activityTypeManager.GetByIdAsync(id));
         }
 
         // GET: ActivityTypeController/Create
@@ -58,7 +58,7 @@ namespace Timelog.WebApp.Controllers
         public ActionResult Edit(long id)
         {
             
-            return View(_activityTypeManager.GetById(id));
+            return View(_activityTypeManager.GetByIdAsync(id));
         }
 
         // POST: ActivityTypeController/Edit/5
@@ -79,14 +79,14 @@ namespace Timelog.WebApp.Controllers
             }
             catch
             {
-                return View(_activityTypeManager.GetById(id));
+                return View(_activityTypeManager.GetByIdAsync(id));
             }
         }
 
         // GET: ActivityTypeController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_activityTypeManager.GetById(id));
+            return View(_activityTypeManager.GetByIdAsync(id));
         }
 
         // POST: ActivityTypeController/Delete/5
@@ -101,7 +101,7 @@ namespace Timelog.WebApp.Controllers
             }
             catch
             {
-                return View(_activityTypeManager.GetById(id));
+                return View(_activityTypeManager.GetByIdAsync(id));
             }
         }
     }

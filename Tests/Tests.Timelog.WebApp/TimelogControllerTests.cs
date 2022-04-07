@@ -53,7 +53,7 @@ namespace Tests.Timelog.WebApp
             var controller = new ActivityController(timelogAspService);            
 
             //Action
-            var result = controller.Index();
+            var result = controller.IndexAsync();
 
             //Assert
             var veiwResult = Assert.IsType<ViewResult>(result);

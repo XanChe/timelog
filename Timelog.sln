@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.WebApp", "TimelogWebApp\Timelog.WebApp.csproj", "{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Core", "TimelogCore\Timelog.Core.csproj", "{618DF962-BD78-4412-8B4A-B7382C086CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogCore", "TimelogCore\TimelogCore.csproj", "{618DF962-BD78-4412-8B4A-B7382C086CE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Services", "ActivityComponent\Timelog.Services.csproj", "{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogServices", "ActivityComponent\TimelogServices.csproj", "{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Timelog.DbLayer", "Tests\Test.Timelog.DbLayer\Tests.Timelog.DbLayer.csproj", "{33D04BA8-41A2-48AE-A675-172EBBA7488E}"
 EndProject
@@ -17,6 +17,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Timelog.WebApp", "Tes
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{07C04430-96ED-4561-9264-83ADBB5BFDEE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Core", "Timelog.Core\Timelog.Core.csproj", "{809FCC0F-707D-4526-AD31-FD789871345A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Data", "Timelog.Data\Timelog.Data.csproj", "{4DC90009-2925-4B81-A260-A20E07A64A6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Services", "Timelog.Services\Timelog.Services.csproj", "{9F804291-598E-475F-B15F-EF089761CACC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Api", "Timelog.Api\Timelog.Api.csproj", "{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timelog.AspNetCore", "Timelog.AspNetCore\Timelog.AspNetCore.csproj", "{351FA28A-017B-4A59-9055-4BA194DF1D66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,15 +34,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33D04BA8-41A2-48AE-A675-172EBBA7488E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -50,6 +57,26 @@ Global
 		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{809FCC0F-707D-4526-AD31-FD789871345A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{809FCC0F-707D-4526-AD31-FD789871345A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{809FCC0F-707D-4526-AD31-FD789871345A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{809FCC0F-707D-4526-AD31-FD789871345A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC90009-2925-4B81-A260-A20E07A64A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC90009-2925-4B81-A260-A20E07A64A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC90009-2925-4B81-A260-A20E07A64A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC90009-2925-4B81-A260-A20E07A64A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F804291-598E-475F-B15F-EF089761CACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F804291-598E-475F-B15F-EF089761CACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F804291-598E-475F-B15F-EF089761CACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F804291-598E-475F-B15F-EF089761CACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{351FA28A-017B-4A59-9055-4BA194DF1D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{351FA28A-017B-4A59-9055-4BA194DF1D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{351FA28A-017B-4A59-9055-4BA194DF1D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{351FA28A-017B-4A59-9055-4BA194DF1D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

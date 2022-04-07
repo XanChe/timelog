@@ -3,6 +3,8 @@ using Timelog.WebApp.Data;
 using Timelog.WebApp.Models;
 using Timelog.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using Timelog.AspNetCore.Services;
+using Timelog.AspNetCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -17,7 +19,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddTimelogComponent(connectionString);
+builder.Services.AddTimelogServices();
 builder.Services.AddScoped<TimelogAspService>();
 
 builder.Services.AddControllersWithViews();

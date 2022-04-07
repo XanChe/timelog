@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TimelogCore\Timelog.Core.csproj" />
+    <ProjectReference Include="..\..\TimelogCore\TimelogCore.csproj" />
   </ItemGroup>
 
 </Project>

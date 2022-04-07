@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Timelog.AspNetCore.Services;
+using Timelog.Core.Entities;
+using Timelog.Core.Services;
 using Timelog.Services;
-using Timelog.Entities;
 
 namespace Timelog.WebApp.Controllers
 {
@@ -10,18 +11,18 @@ namespace Timelog.WebApp.Controllers
     public class ProjectController : Controller
     {
         private TimelogServiceBuilder _timelogService;
-        private EntityService<Project> _projectManager;
+        private IEntityService<Project> _projectManager;
 
         public ProjectController(TimelogAspService timelogAspService)
         {
-            _timelogService = timelogAspService.TimelogService;
+            _timelogService = timelogAspService.TimelogServiceBuilder;
             _projectManager = _timelogService.CreateProjectService();
         }
 
         // GET: ProjectController
         public IActionResult Index()
         {
-            return View(_projectManager.GetAll());
+            return View(_projectManager.GetAllAsync());
         }
 
         // GET: ProjectController/Details/5

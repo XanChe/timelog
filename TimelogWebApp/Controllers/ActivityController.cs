@@ -1,44 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Timelog.Services;
-using Timelog.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Timelog.AspNetCore.Services;
+using Timelog.Core.Services;
+using Timelog.Core.Entities;
+using Timelog.Core;
 
 namespace TimelogWebApp.Controllers
 {
     [Authorize]
     public class ActivityController: Controller
     {
-        private TimelogServiceBuilder _timelogService;
-        private UserActivityService _activityManager;
+        private ITimelogServiceBuilder _timelogService;
+        private IUserActivityService _activityManager;
 
         public ActivityController(TimelogAspService timelogAspService)
         {
-            _timelogService = timelogAspService.TimelogService;
+            _timelogService = timelogAspService.TimelogServiceBuilder;
             _activityManager = _timelogService.CreateUserActivityService();  
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var projectManager = _timelogService.CreateProjectService();
             var activityTypeManager = _timelogService.CreateActivityTypeService();
                        
 
-            ViewBag.Projects = new SelectList(projectManager.GetAll(), "Id", "Name");
-            ViewBag.ActivityTypes = new SelectList(activityTypeManager.GetAll(), "Id", "Name");
+            ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
+            ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
             
-            var activities = _activityManager.GetActivities().ToList();
-            return View(activities);
+            //var activities = _activityManager.GetActivities().ToList();
+            return View(await _activityManager.GetActivities());
         }
 
         // GET: ActivityController/Details/5
-        public ActionResult Details(long id)
+        public async Task<ActionResult> Details(long id)
         {
-            UserActivityModel activity = _activityManager.GetById(id);
+            UserActivity activity = await _activityManager.GetByIdAsync(id);
             return View(activity);
         }
         public IActionResult Start()
@@ -47,8 +45,8 @@ namespace TimelogWebApp.Controllers
             var activityTypeManager = _timelogService.CreateActivityTypeService();
 
 
-            ViewBag.Projects = new SelectList(projectManager.GetAll(), "Id", "Name");
-            ViewBag.ActivityTypes = new SelectList(activityTypeManager.GetAll(), "Id", "Name");
+            ViewBag.Projects = new SelectList(projectManager.GetAllAsync(), "Id", "Name");
+            ViewBag.ActivityTypes = new SelectList(activityTypeManager.GetAllAsync(), "Id", "Name");
 
             return View();
         }
