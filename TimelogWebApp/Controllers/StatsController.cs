@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Timelog.Services;
+using Timelog.AspNetCore.Services;
+using Timelog.Core;
+using Timelog.Core.Services;
 
 namespace Timelog.WebApp.Controllers
 {
     public class StatsController : Controller
     {
-        private TimelogServiceBuilder _timelogServiceBuilder;
-        private StatisticsService _statisticsService;
+        private ITimelogServiceBuilder _timelogServiceBuilder;
+        private IStatisticsService _statisticsService;
 
         public StatsController(TimelogAspService timelogAspService)
         {
-            _timelogServiceBuilder = timelogAspService.TimelogService;
+            _timelogServiceBuilder = timelogAspService.TimelogServiceBuilder;
             _statisticsService = _timelogServiceBuilder.CreateStatisticsService();
         }
         public IActionResult Index()

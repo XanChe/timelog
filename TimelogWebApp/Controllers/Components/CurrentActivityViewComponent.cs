@@ -1,22 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Timelog.Services;
-using Timelog.Entities;
+using Timelog.AspNetCore.Services;
+using Timelog.Core;
+using Timelog.Core.Services;
 
 namespace Timelog.WebApp.Controllers.Components
 {
     public class CurrentActivity:ViewComponent
     {
-        private TimelogServiceBuilder _timelogService;
-        private UserActivityService _activityManager;
+        private ITimelogServiceBuilder _timelogServiceBuilder;
+        private IUserActivityService _activityManager;
 
         public CurrentActivity(TimelogAspService timelogAspService)
         {
-            _timelogService = timelogAspService.TimelogService;
-            _activityManager = _timelogService.CreateUserActivityService();
+            _timelogServiceBuilder = timelogAspService.TimelogServiceBuilder;
+            _activityManager = _timelogServiceBuilder.CreateUserActivityService();
         }        
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> Invoke()
         {
-            var currentActivity = (UserActivityModel)_activityManager.GetCurrentActivityIfExist();
+            var currentActivity = await _activityManager.GetCurrentActivityIfExistAsync();
             if (currentActivity == null)
             {
                 return View("_Start");
@@ -24,8 +25,7 @@ namespace Timelog.WebApp.Controllers.Components
             else
             {
                 return View(currentActivity);
-            }
-            
+            }            
         }
     }
 }

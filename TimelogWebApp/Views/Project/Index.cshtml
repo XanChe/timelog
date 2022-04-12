@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Timelog.Entities.Project>
+﻿@model IEnumerable<Project>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,9 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UniqId)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.UserUniqId)
             </th>
@@ -36,9 +34,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UniqId)
-            </td>
+          
             <td>
                 @Html.DisplayFor(modelItem => item.UserUniqId)
             </td>

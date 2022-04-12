@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Timelog.AspNetCore.Services;
+using Timelog.Core;
+using Timelog.Core.Entities;
+using Timelog.Core.Services;
 using Timelog.Services;
-using Timelog.Entities;
 
 namespace Timelog.WebApp.Controllers
 {
     [Authorize]
     public class ActivityTypeController : Controller
     {
-        private TimelogServiceBuilder _timelogService;
-        private EntityService<ActivityType> _activityTypeManager;
+        private ITimelogServiceBuilder _timelogServiceBuilder;
+        private IEntityService<ActivityType> _activityTypeManager;
 
         public ActivityTypeController(TimelogAspService timelogAspService)
         {
-            _timelogService = timelogAspService.TimelogService;
-            _activityTypeManager = _timelogService.CreateActivityTypeService();
+            _timelogServiceBuilder = timelogAspService.TimelogServiceBuilder;
+            _activityTypeManager = _timelogServiceBuilder.CreateActivityTypeService();
         }
         // GET: ActivityTypeController
         public ActionResult Index()
@@ -23,7 +26,7 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ActivityTypeController/Details/5
-        public ActionResult Details(long id)
+        public ActionResult Details(Guid id)
         {
             return View(_activityTypeManager.GetByIdAsync(id));
         }
@@ -43,7 +46,7 @@ namespace Timelog.WebApp.Controllers
             {
                 var activityType = new ActivityType() { Name = collection["Name"], Description = collection["Description"] };
 
-                _activityTypeManager.Create(activityType);
+                _activityTypeManager.CreateAsync(activityType);
 
 
                 return RedirectToAction(nameof(Index));
@@ -55,7 +58,7 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ActivityTypeController/Edit/5
-        public ActionResult Edit(long id)
+        public ActionResult Edit(Guid id)
         {
             
             return View(_activityTypeManager.GetByIdAsync(id));
@@ -64,17 +67,17 @@ namespace Timelog.WebApp.Controllers
         // POST: ActivityTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(long id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
                 var activityType = new ActivityType() { 
                     Id = id,
-                    UniqId = new Guid(collection["UniqId"]),
+                   // UniqId = new Guid(collection["UniqId"]),
                     Name = collection["Name"], 
                     Description = collection["Description"] 
                 };
-                _activityTypeManager.Update(activityType);
+                _activityTypeManager.UpdateAsync(activityType);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -84,7 +87,7 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ActivityTypeController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View(_activityTypeManager.GetByIdAsync(id));
         }
@@ -92,11 +95,11 @@ namespace Timelog.WebApp.Controllers
         // POST: ActivityTypeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
-                _activityTypeManager.Delete(id);
+                _activityTypeManager.DeleteAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

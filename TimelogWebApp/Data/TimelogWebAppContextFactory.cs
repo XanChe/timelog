@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Timelog.EF;
-
-
-
+using Timelog.Data;
 
 namespace Timelog.WebApp.Data
 {

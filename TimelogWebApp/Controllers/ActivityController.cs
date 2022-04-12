@@ -22,41 +22,41 @@ namespace TimelogWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var projectManager = _timelogService.CreateProjectService();
-            var activityTypeManager = _timelogService.CreateActivityTypeService();
+            //var projectManager = _timelogService.CreateProjectService();
+            //var activityTypeManager = _timelogService.CreateActivityTypeService();
                        
 
-            ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
-            ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
+            //ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
+            //ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
             
             //var activities = _activityManager.GetActivities().ToList();
-            return View(await _activityManager.GetActivities());
+            return View(await _activityManager.GetActivitiesAsync());
         }
 
         // GET: ActivityController/Details/5
-        public async Task<ActionResult> Details(long id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            UserActivity activity = await _activityManager.GetByIdAsync(id);
+            UserActivity? activity = await _activityManager.GetByIdAsync(id);
             return View(activity);
         }
-        public IActionResult Start()
+        public async Task<IActionResult> Start()
         {
             var projectManager = _timelogService.CreateProjectService();
             var activityTypeManager = _timelogService.CreateActivityTypeService();
 
 
-            ViewBag.Projects = new SelectList(projectManager.GetAllAsync(), "Id", "Name");
-            ViewBag.ActivityTypes = new SelectList(activityTypeManager.GetAllAsync(), "Id", "Name");
+            ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
+            ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Start(long projectId, long activityTypeId)
+        public IActionResult Start(Guid projectId, Guid activityTypeId)
         {
             if (ModelState.IsValid)
             {
-                var startedActivity = _activityManager.StartNewActivity(projectId, activityTypeId);                
+                var startedActivity = _activityManager.StartNewActivityAsync(projectId, activityTypeId);                
             }
             return RedirectToAction("Index");
         }
@@ -64,7 +64,7 @@ namespace TimelogWebApp.Controllers
         [HttpPost]
         public IActionResult Stop(string comment)
         {            
-            _activityManager.StopCurrentActivityIfExist(comment); 
+            _activityManager.StopCurrentActivityIfExistAsync(comment); 
             return RedirectToAction("Index");
         }
 

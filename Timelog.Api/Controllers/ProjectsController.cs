@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timelog.AspNetCore.Services;
+using Timelog.AspNetCore.ViewModels;
 using Timelog.Core;
 using Timelog.Core.Entities;
 using Timelog.Core.Services;
@@ -22,34 +23,69 @@ namespace Timelog.Api.Controllers
         }
         // GET: api/<ProjectsController>
         [HttpGet]
-        public async Task<IEnumerable<Project>> Get()
+        public async Task<ActionResult<IEnumerable<Project>>> Get()
         {
-            return await _projectManager.GetAllAsync();
+            return Ok(await _projectManager.GetAllAsync());
         }
 
         // GET api/<ProjectsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{guid}")]
+        public async Task<ActionResult<Project>> Get(Guid guid)
         {
-            return "value";
+            var project = await _projectManager.GetByIdAsync(guid);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return Ok(project);
         }
 
         // POST api/<ProjectsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<ProjectViewModel>> Post(SaveProjectViewModel saveProjectViewModel)
         {
+            if (ModelState.IsValid)
+            {
+                
+                var project = new Project() { Name = saveProjectViewModel.Name, Description = saveProjectViewModel.Description };
+               
+                await _projectManager.CreateAsync(project);
+                return Ok(project);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{guid}")]
+        public async Task<ActionResult<Project>> Put(string guid, SaveProjectViewModel saveProjectViewModel)
         {
+            if (ModelState.IsValid)
+            {
+                var project = new Project()
+                {
+
+                    Id = new Guid(guid),
+                    Name = saveProjectViewModel.Name,
+                    Description = saveProjectViewModel.Description
+                };
+                await _projectManager.UpdateAsync(project);
+                return Ok(project);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<ProjectsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{guid}")]
+        public async Task<IActionResult> Delete(Guid guid)
         {
+            await _projectManager.DeleteAsync(guid);
+            return NoContent();
         }
     }
 }

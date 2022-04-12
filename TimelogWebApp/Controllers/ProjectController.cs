@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timelog.AspNetCore.Services;
+using Timelog.Core;
 using Timelog.Core.Entities;
 using Timelog.Core.Services;
 using Timelog.Services;
@@ -10,7 +11,7 @@ namespace Timelog.WebApp.Controllers
     [Authorize]
     public class ProjectController : Controller
     {
-        private TimelogServiceBuilder _timelogService;
+        private ITimelogServiceBuilder _timelogService;
         private IEntityService<Project> _projectManager;
 
         public ProjectController(TimelogAspService timelogAspService)
@@ -20,15 +21,15 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ProjectController
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_projectManager.GetAllAsync());
+            return View(await _projectManager.GetAllAsync());
         }
 
         // GET: ProjectController/Details/5
-        public IActionResult Details(long id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            return View(_projectManager.GetById(id));
+            return View(await _projectManager.GetByIdAsync(id));
         }
 
         // GET: ProjectController/Create
@@ -40,12 +41,12 @@ namespace Timelog.WebApp.Controllers
         // POST: ProjectController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(IFormCollection collection)
         {
             try
             {
                 var project = new Project() { Name = collection["Name"], Description = collection["Description"] };
-                _projectManager.Create(project);
+                await _projectManager.CreateAsync(project);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -55,53 +56,53 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ProjectController/Edit/5
-        public IActionResult Edit(long id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             
-            return View(_projectManager.GetById(id));
+            return View(await _projectManager.GetByIdAsync(id));
         }
 
         // POST: ProjectController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, IFormCollection collection)
         {
             try
             {
                 var project = new Project() { 
                     Id = id, 
-                    UniqId = new Guid(collection["UniqId"]), 
+                   // UniqId = new Guid(collection["UniqId"]), 
                     Name = collection["Name"], 
                     Description = collection["Description"] 
                 };
-                _projectManager.Update(project);
+                await _projectManager.UpdateAsync(project);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(_projectManager.GetById(id));
+                return View(await _projectManager.GetByIdAsync(id));
             }
         }
 
         // GET: ProjectController/Delete/5
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View(_projectManager.GetById(id));
+            return View(await _projectManager.GetByIdAsync(id));
         }
 
         // POST: ProjectController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long id, IFormCollection collection)
+        public async Task<IActionResult> Delete(Guid id, IFormCollection collection)
         {
             try
             {
-                _projectManager.Delete(id);
+                await _projectManager.DeleteAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(_projectManager.GetById(id));
+                return View(await _projectManager.GetByIdAsync(id));
             }
         }
     }

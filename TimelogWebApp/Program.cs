@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Timelog.WebApp.Data;
-using Timelog.WebApp.Models;
-using Timelog.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Timelog.AspNetCore.Services;
 using Timelog.AspNetCore.Extensions;
+using Timelog.AspNetCore;
+using Timelog.AspNetCore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
