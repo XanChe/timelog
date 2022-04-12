@@ -1,23 +1,27 @@
 ﻿using Xunit;
 using TimelogWebApp.Controllers;
 using Timelog.Services;
-using Timelog.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
-using Timelog.WebApp.Models;
-using Timelog.Entities;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
-
+using Timelog.Core.Repositories;
+using Timelog.AspNetCore.Services;
+using Timelog.Core.Entities;
+using Timelog.AspNetCore.Models;
+using System.Threading.Tasks;
 
 namespace Tests.Timelog.WebApp
 {
     public class TimelogControllerTests
-    {    
+    {
+        private static Guid TEST_ID_1 = new Guid("b5a68909-8c42-433e-bd81-f76aa92c2166");
+        private static Guid TEST_ID_2 = new Guid("b049aaf2-61c5-435e-b4a7-018c95925878");
+
         private UserManager<User> _mockUserManagerr;
         private IHttpContextAccessor _httpContextAccessor;
         public  TimelogControllerTests()
@@ -27,7 +31,7 @@ namespace Tests.Timelog.WebApp
         }
         
         [Fact]
-        public void StartGetActionExist()
+        public async Task StartGetActionExist()
         {
             var mockRepository = new Mock<IRepositoryActivity>();
             var repoManager = ControllerInitHelper.mockRepoManagerWithActivities(mockRepository.Object);
@@ -36,29 +40,29 @@ namespace Tests.Timelog.WebApp
             var controller = new ActivityController(timelogAspService);
 
             //Action
-            var result = controller.Start();
+            var result = await controller.Start();
 
             //Assert
             var veiwResult = Assert.IsType<ViewResult>(result);            
 
         }
         [Fact]
-        public void IndexReturnViewResultAListOfUserActivities() 
+        public async Task IndexReturnViewResultAListOfUserActivities() 
         {
             var mockRepository = new Mock<IRepositoryActivity>();
-            mockRepository.Setup(x => x.GetAll()).Returns(GetTestActivities());
+            mockRepository.Setup(x => x.GetAllAsync()).Returns(GetTestActivities());
             
             var _repoManager = ControllerInitHelper.mockRepoManagerWithActivities();
             var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(_repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);            
 
             //Action
-            var result = controller.IndexAsync();
+            var result = await controller.Index();
 
             //Assert
             var veiwResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<UserActivityModel>>(veiwResult.Model);
-            Assert.Equal(GetTestActivities().Count(), model.Count());
+            var model = Assert.IsAssignableFrom<IEnumerable<UserActivity>>(veiwResult.Model);
+            Assert.Equal((await GetTestActivities()).Count(), model.Count());
 
         }
 
@@ -74,14 +78,14 @@ namespace Tests.Timelog.WebApp
 
 
             //Action
-            var result = controller.Start(1, 1);
+            var result = controller.Start(TEST_ID_1, TEST_ID_2);
 
             //Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             //UserActivityModel model = redirectToActionResult.RouteValues;
             Assert.Null(redirectToActionResult.ControllerName);
             Assert.Equal("Index", redirectToActionResult.ActionName);
-            mockRepository.Verify(mok => mok.Create(It.IsAny<UserActivityModel>()));
+            mockRepository.Verify(mok => mok.CreateAsync(It.IsAny<UserActivity>()));
 
         }
         [Fact]
@@ -103,20 +107,20 @@ namespace Tests.Timelog.WebApp
 
         
 
-        private IEnumerable<UserActivityModel> GetTestActivities()
+        private async Task<IEnumerable<UserActivity>> GetTestActivities()
         {
-            return new List<UserActivityModel>()
+            return await Task.FromResult(new List<UserActivity>()
             {
-                new UserActivityModel { Title = "First action", Status = UserActivityModel.ActivityStatus.Complite},
-                new UserActivityModel { Title = "Second action", Status = UserActivityModel.ActivityStatus.Started}
-            };
+                new UserActivity { Title = "First action", Status = UserActivity.ActivityStatus.Complite},
+                new UserActivity { Title = "Second action", Status = UserActivity.ActivityStatus.Started}
+            }.ToList());
         }
         private IEnumerable<Project> GetTestPrijects()
         {
             return new List<Project>()
             {
-                new Project { Name = "First action", Id = 1 },
-                new Project { Name = "Second action", Id = 2 }
+                new Project { Name = "First action", Id = TEST_ID_1 },
+                new Project { Name = "Second action", Id = TEST_ID_2 }
             };
         }
 

@@ -8,14 +8,17 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Timelog.Entities;
-using Timelog.Interfaces;
-using Timelog.WebApp.Models;
+using Timelog.AspNetCore.Models;
+using Timelog.Core;
+using Timelog.Core.Entities;
+using Timelog.Core.Repositories;
 
 namespace Tests.Timelog.WebApp
 {
     internal class ControllerInitHelper
     {
+        private static Guid TEST_ID_1 = new Guid("b5a68909-8c42-433e-bd81-f76aa92c2166");
+        private static Guid TEST_ID_2 = new Guid("b049aaf2-61c5-435e-b4a7-018c95925878");
         public static UserManager<User>  GetFailUserManager()
         {   
             var store = new Mock<IUserStore<User>>();
@@ -45,16 +48,16 @@ namespace Tests.Timelog.WebApp
             return mockContextAcsesor.Object;
         }
 
-        public static IRepositoryManager mockRepoManagerWithActivities(IRepositoryActivity repositoryActivity)
+        public static IUnitOfWork mockRepoManagerWithActivities(IRepositoryActivity repositoryActivity)
         {
            
             var repositoryActivityType = new Mock<IRepositoryGeneric<ActivityType>>();
-            repositoryActivityType.Setup(x => x.GetAll()).Returns(GetTestActivityTypes());
+            repositoryActivityType.Setup(x => x.GetAllAsync()).Returns(GetTestActivityTypes());
 
             var repositoryProject = new Mock<IRepositoryGeneric<Project>>();
-            repositoryProject.Setup(x => x.GetAll()).Returns(GetTestProjects());
+            repositoryProject.Setup(x => x.GetAllAsync()).Returns(GetTestProjects());
 
-            var mock = new Mock<IRepositoryManager>();
+            var mock = new Mock<IUnitOfWork>();
             mock.Setup(x => x.Activities).Returns(repositoryActivity);
             mock.Setup(x => x.Projects).Returns(repositoryProject.Object);
             mock.Setup(x => x.ActivityTypes).Returns(repositoryActivityType.Object);
@@ -62,48 +65,48 @@ namespace Tests.Timelog.WebApp
             return mock.Object;
         }
 
-        public static IRepositoryManager mockRepoManagerWithActivities()
+        public static IUnitOfWork mockRepoManagerWithActivities()
         {
             var repositoryActivity = new Mock<IRepositoryActivity>();
-            repositoryActivity.Setup(x => x.GetAll()).Returns(GetTestActivities());
+            repositoryActivity.Setup(x => x.GetAllAsync()).Returns(GetTestActivities());
 
             var repositoryActivityType = new Mock<IRepositoryGeneric<ActivityType>>();
-            repositoryActivityType.Setup(x => x.GetAll()).Returns(GetTestActivityTypes());
+            repositoryActivityType.Setup(x => x.GetAllAsync()).Returns(GetTestActivityTypes());
 
             var repositoryProject = new Mock<IRepositoryGeneric<Project>>();
-            repositoryProject.Setup(x => x.GetAll()).Returns(GetTestProjects());
+            repositoryProject.Setup(x => x.GetAllAsync()).Returns(GetTestProjects());
 
-            var mock = new Mock<IRepositoryManager>();
+            var mock = new Mock<IUnitOfWork>();
             mock.Setup(x => x.Activities).Returns(repositoryActivity.Object);
             mock.Setup(x => x.Projects).Returns(repositoryProject.Object);
             mock.Setup(x => x.ActivityTypes).Returns(repositoryActivityType.Object);
 
             return mock.Object;
         }
-        private static IEnumerable<UserActivityModel> GetTestActivities()
+        private static async Task<IEnumerable<UserActivity>> GetTestActivities()
         {
-            return new List<UserActivityModel>()
+            return await Task.FromResult(new List<UserActivity>()
             {
-                new UserActivityModel { Title = "First action", Status = UserActivityModel.ActivityStatus.Complite},
-                new UserActivityModel { Title = "Second action", Status = UserActivityModel.ActivityStatus.Started}
-            };
+                new UserActivity { Title = "First action", Status = UserActivity.ActivityStatus.Complite},
+                new UserActivity { Title = "Second action", Status = UserActivity.ActivityStatus.Started}
+            });
         }
-        private static IEnumerable<Project> GetTestProjects()
+        private static async Task<IEnumerable<Project>> GetTestProjects()
         {
-            return new List<Project>()
+            return await Task.FromResult(new List<Project>()
             {
-                new Project { Name = "First project", Id = 1 },
-                new Project { Name = "Second project", Id = 2 }
-            };
+                new Project { Name = "First project", Id = TEST_ID_1 },
+                new Project { Name = "Second project", Id = TEST_ID_2 }
+            });
         }
 
-        private static IEnumerable<ActivityType> GetTestActivityTypes()
+        private static async Task<IEnumerable<ActivityType>> GetTestActivityTypes()
         {
-            return new List<ActivityType>()
+            return await Task.FromResult(new List<ActivityType>()
             {
-                new ActivityType { Name = "First Type", Id = 1 },
-                new ActivityType { Name = "Second Type", Id = 2 }
-            };
+                new ActivityType { Name = "First Type", Id = TEST_ID_1 },
+                new ActivityType { Name = "Second Type", Id = TEST_ID_2 }
+            });
         }
     }
 }

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.17.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ActivityComponent\TimelogServices.csproj" />
+    <ProjectReference Include="..\..\Timelog.Core\Timelog.Core.csproj" />
+    <ProjectReference Include="..\..\Timelog.Data\Timelog.Data.csproj" />
+    <ProjectReference Include="..\..\Timelog.Services\Timelog.Services.csproj" />
   </ItemGroup>
 
 </Project>

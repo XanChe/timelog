@@ -1,9 +1,10 @@
 using System;
 using Xunit;
 using Timelog.Services;
-using Timelog.Interfaces;
-using Timelog.Entities;
 using Moq;
+using Timelog.Core.Repositories;
+using Timelog.Core.Entities;
+using Timelog.Core;
 
 namespace Tests.Timelog.Services
 {
@@ -12,7 +13,7 @@ namespace Tests.Timelog.Services
         [Fact]
         public void UserActivityServiceIsExist()
         {
-            var mockRepository = new Mock<IRepositoryActivity>();
+            var mockRepository = new Mock<IUnitOfWork>();
             var service = new UserActivityService(mockRepository.Object);
         }
 

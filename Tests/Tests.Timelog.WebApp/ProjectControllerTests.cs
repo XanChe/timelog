@@ -9,12 +9,14 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Timelog.Services;
-using Timelog.Entities;
-using Timelog.Interfaces;
-using Timelog.WebApp.Models;
 using Timelog.WebApp.Controllers;
 using Xunit;
 using Microsoft.Extensions.Primitives;
+using Timelog.Core.Repositories;
+using Timelog.Core.Entities;
+using Timelog.AspNetCore.Services;
+using Timelog.Core;
+using Timelog.AspNetCore.Models;
 
 namespace Tests.Timelog.WebApp
 {
@@ -32,26 +34,26 @@ namespace Tests.Timelog.WebApp
         }
 
         [Fact]
-        public void IndexActionReturnListOfProjects()
+        public async Task IndexActionReturnListOfProjects()
         {
             var mockRepository = new Mock<IRepositoryGeneric<Project>>();
-            mockRepository.Setup(x => x.GetAll()).Returns(GetTestProjects());
+            mockRepository.Setup(x => x.GetAllAsync()).Returns(GetTestProjects());
 
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
             var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ProjectController(timelogAspService);
 
             //Action
-            var result = controller.Index();
+            var result = await controller.Index();
 
             //Assert
             var veiwResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<Project>>(veiwResult.Model);
-            Assert.Equal(GetTestProjects().Count(), model.Count());
+            Assert.Equal((await GetTestProjects()).Count(), model.Count());
         }
 
         [Fact]
-        public void AddActionReturnRedirectAndAssProject()
+        public async Task AddActionReturnRedirectAndAssProject()
         {
             var mockRepository = new Mock<IRepositoryGeneric<Project>>();
             var repoManager = mockRepoManagerWithActivities(mockRepository.Object);
@@ -66,30 +68,30 @@ namespace Tests.Timelog.WebApp
             };
             var formItems = new FormCollection(valueDictionary);
             //Action
-            var result = controller.Create(formItems);
+            var result = await controller.Create(formItems);
 
             // Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Null(redirectToActionResult.ControllerName);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
-            mockRepository.Verify(r => r.Create(It.IsAny<Project>()));            
+            mockRepository.Verify(r => r.CreateAsync(It.IsAny<Project>()));            
         }
-        private IRepositoryManager mockRepoManagerWithActivities(IRepositoryGeneric<Project> repository)
+        private IUnitOfWork mockRepoManagerWithActivities(IRepositoryGeneric<Project> repository)
         {
-            var mock = new Mock<IRepositoryManager>();
+            var mock = new Mock<IUnitOfWork>();
             mock.Setup(x => x.Projects).Returns(repository);
 
             return mock.Object;
         }
 
-        private IEnumerable<Project> GetTestProjects()
+        private async Task<IEnumerable<Project>> GetTestProjects()
         {
-            return new List<Project>()
+            return await Task.FromResult(new List<Project>()
             {
                 new Project { Name = "Project 1"},
                 new Project { Name = "Project 2"}
-            };
+            });
         }
     }
 }

@@ -1,18 +1,20 @@
 using NUnit.Framework;
-using Timelog.Repositories;
-using Timelog.EF;
-using Timelog.Entities;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using Timelog;
 using System;
 using System.Linq;
+using Timelog.Data;
+using Timelog.Data.Repositories;
+using Timelog.Core.Entities;
 
 namespace Test.Timelog.DbLayer
 {
     public class TestsRepositories
     {
+        private static Guid TEST_ID_1 = new Guid("b5a68909-8c42-433e-bd81-f76aa92c2166");
+        private static Guid TEST_ID_2 = new Guid("b049aaf2-61c5-435e-b4a7-018c95925878");
         private readonly DbConnection _connection;
         private readonly DbContextOptions<TimelogDbContext> _contextOptions;
 
@@ -47,8 +49,8 @@ namespace Test.Timelog.DbLayer
         public void TestRepositoryCreation()
         {
 
-            var repo = new DbRepositoryGeneric<Project>(_context);          
-
+            var repo = new DbRepositoryGeneric<Project>(_context);
+            
             Assert.Pass();
         }
 
@@ -57,43 +59,44 @@ namespace Test.Timelog.DbLayer
         {
             var repo = new DbRepositoryGeneric<Project>(_context);
 
-            repo.Create(new Project() { Id = 1, Name = "Coding", Description = "Just coding" });
+            var newProject = new Project() { Name = "Coding", Description = "Just coding" };
+            repo.Create(newProject);
             _context.SaveChanges();
-            var project = repo.Read(1);
+            var project = repo.Read(newProject.Id);
             Assert.AreEqual("Coding", project.Name);
             project.Name = "Testing";
 
             repo.Update(project);
             _context.SaveChanges();
 
-            var updatedProject = repo.Read(1);
+            var updatedProject = repo.Read(newProject.Id);
 
             Assert.AreEqual("Testing", updatedProject.Name);
 
-            repo.Delete(1);
+            repo.Delete(newProject.Id);
             _context.SaveChanges();
 
-            var deletedProject = repo.Read(1);
+            var deletedProject = repo.Read(newProject.Id);
             Assert.IsNull(deletedProject);
         }
 
         [Test]
         public void TestRepositoryManager()
         {
-            var repoManager = new DbRepositoryManager(_context);
+            var repoManager = new DbUnitOfWork(_context);
             var projetcs = repoManager.Projects;
 
-            projetcs.Create(new Project() { Id = 1, Name = "Jon" });
+            projetcs.Create(new Project() { Id = TEST_ID_1, Name = "Jon" });
             repoManager.SaveChanges();
 
-            var project = projetcs.Read(1);
+            var project = projetcs.Read(TEST_ID_1);
 
             Assert.AreEqual("Jon", project.Name);
         }
         [Test]
         public void TestRepositoryUserFilter()
         {
-            var repoManager = new DbRepositoryManager(_context);
+            var repoManager = new DbUnitOfWork(_context);
             var projects = repoManager.Projects;
             var userGuid = Guid.NewGuid();
 
