@@ -5,9 +5,9 @@ namespace Timelog.Core.Services
     public interface IEntityService<T> where T : Entity
     {
         public Task<IEnumerable<T>> GetAllAsync();
-        public Task<T?> GetByIdAsync(long Id);
-        public Task Create(T item);
-        public Task Update(T item);
-        public Task Delete(long id);       
+        public Task<T?> GetByIdAsync(Guid Id);
+        public Task CreateAsync(T item);
+        public Task UpdateAsync(T item);
+        public Task DeleteAsync(Guid id);       
     }
 }

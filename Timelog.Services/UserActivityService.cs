@@ -58,7 +58,7 @@ namespace Timelog.Services
                 activity.EndTime = customEnd;
             }
         }
-        public async Task StopPreviousActivityIfExist()
+        public async Task StopPreviousActivityIfExistAsync()
         {
             UserActivity? currentActivity = await _unitOfWork.Activities.getCurrentActivityAsync();
 
@@ -69,9 +69,9 @@ namespace Timelog.Services
                 await _unitOfWork.Activities.SaveChangesAsync();
             }
         }
-        public async Task<UserActivity> StartNewActivity(long projectId, long activityTypeId)
+        public async Task<UserActivity> StartNewActivityAsync(Guid projectId, Guid activityTypeId)
         {
-            await StopPreviousActivityIfExist();
+            await StopPreviousActivityIfExistAsync();
             var newUserActivity = new UserActivity()
             {
                 ProjectId = projectId,
@@ -86,12 +86,12 @@ namespace Timelog.Services
             return newUserActivity;
         }
 
-        public async Task<UserActivity?> GetCurrentActivityIfExist()
+        public async Task<UserActivity?> GetCurrentActivityIfExistAsync()
         {
             return await _unitOfWork.Activities.getCurrentActivityAsync();
         }
 
-        public async Task StopCurrentActivityIfExist(string comment)
+        public async Task StopCurrentActivityIfExistAsync(string comment)
         {
             UserActivity? currentActivity = await _unitOfWork.Activities.getCurrentActivityAsync();
             if (currentActivity != null)
@@ -104,7 +104,7 @@ namespace Timelog.Services
             }
         }
 
-        public async Task<IEnumerable<UserActivity>> GetActivities()
+        public async Task<IEnumerable<UserActivity>> GetActivitiesAsync()
         {          
             return await _unitOfWork.Activities.GetAllAsync();
         }

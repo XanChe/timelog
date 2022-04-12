@@ -19,7 +19,7 @@ namespace Timelog.Data.Repositories
                     return items;
                 }
                 else
-                {
+                {                   
                     return items.Where(predicate).AsQueryable();
                 }
             }
@@ -33,11 +33,11 @@ namespace Timelog.Data.Repositories
         }
         public virtual IEnumerable<T> GetAll()
         {
-            return Items;
+            return items.Where(item => item.UserUniqId == userGuid);
         }
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Items.ToListAsync();
+            return await items.Where(item => item.UserUniqId == userGuid).ToListAsync();
         }      
         public void Create(T item)
         {
@@ -49,7 +49,7 @@ namespace Timelog.Data.Repositories
             item.UserUniqId = userGuid;
             await items.AddAsync(item);
         }
-        public void Delete(long id)
+        public void Delete(Guid id)
         {
             
             var item = Read(id);
@@ -60,14 +60,20 @@ namespace Timelog.Data.Repositories
             }            
         }
 
-        public T? Read(long id)
+        public T? Read(Guid id)
         {
-            return Items.Where(item => item.Id == id).FirstOrDefault();
+            return items
+                .Where(item => item.UserUniqId == userGuid)
+                .Where(item => item.Id == id)
+                .FirstOrDefault();
         }
 
-        public async Task<T?> ReadAsync(long id)
+        public async Task<T?> ReadAsync(Guid id)
         {
-            return await Items.Where(item => item.Id == id).FirstOrDefaultAsync();
+            return await items
+                .Where(item => item.UserUniqId == userGuid)
+                .Where(item => item.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         public void Update(T item)

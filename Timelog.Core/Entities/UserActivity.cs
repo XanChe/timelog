@@ -13,7 +13,7 @@ namespace Timelog.Core.Entities
             this.EndTime = other.EndTime;
             this.Comment = other.Comment;
             this.Id = other.Id;
-            this.UniqId = other.UniqId;
+           // this.UniqId = other.UniqId;
             this.UserUniqId = other.UserUniqId;
             this.Status = other.Status;
             this.Project = project;
@@ -37,14 +37,14 @@ namespace Timelog.Core.Entities
         public string Title { get; set; } = String.Empty;
         [Display(Name = "Комментарий")]
         public string Comment { get; set; } = String.Empty;
-        public long ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 #nullable enable
         [Display(Name = "Проект")] 
         public Project? Project { get; set; }
         [Display(Name = "Тип деятельности")]
         public ActivityType? ActivityType { get; set; }
 #nullable restore
-        public long ActivityTypeId { get; set; }
+        public Guid ActivityTypeId { get; set; }
 
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Timelog.Core.Entities;
+﻿using Timelog.Core.Entities;
 
 namespace Timelog.Core.Repositories
 {
@@ -13,13 +10,13 @@ namespace Timelog.Core.Repositories
         public Guid UserGuid { get; }
         IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
-        T? Read(long id);
-        Task<T?> ReadAsync(long id);
+        T? Read(Guid id);
+        Task<T?> ReadAsync(Guid id);
         void Create(T item);
         Task CreateAsync(T item);
         void Update(T item);
         Task UpdateAsync(T item);
-        void Delete(long id);
+        void Delete(Guid id);
         Task<long> SaveChangesAsync();
 
     }

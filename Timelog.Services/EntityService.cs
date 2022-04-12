@@ -17,12 +17,12 @@ namespace Timelog.Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task<T?> GetByIdAsync(long Id)
+        public async Task<T?> GetByIdAsync(Guid Id)
         {
             return await _repository.ReadAsync(Id);
         }
 
-        public async Task Create(T item)
+        public async Task CreateAsync(T item)
         {
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace Timelog.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Update(T item)
+        public async Task UpdateAsync(T item)
         {
             if (item == null)
             {
@@ -41,7 +41,7 @@ namespace Timelog.Services
             await _repository.UpdateAsync(item);
             await _repository.SaveChangesAsync();
         }
-        public async Task Delete(long id)
+        public async Task DeleteAsync(Guid id)
         {
             _repository.Delete(id);
             await _repository.SaveChangesAsync();
