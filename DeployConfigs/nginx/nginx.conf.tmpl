@@ -6,12 +6,12 @@ http {
     sendfile on;
 
     upstream app_servers {
-        server timelog.dev:44392;
+        server timelog.web:44392;
     }
 
     server {
         listen 80;
-        server_name localhost;
+        server_name web.localhost;
 
         location / {
             return 301 https://$host$request_uri;
@@ -20,7 +20,43 @@ http {
 
     server {
     listen 443 ssl;
-    server_name localhost;
+    server_name web.localhost;
+    #listen 80;
+    ssl_certificate /etc/nginx/localhost.crt;
+    ssl_certificate_key /etc/nginx/localhost.key;
+    location / {
+        proxy_pass         https://app_servers;        
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection keep-alive;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_set_header   X-Forwarded-Host $server_name;
+      }
+    }
+}
+
+http {
+    sendfile on;
+
+    upstream app_servers {
+        server timelog.api:44393;
+    }
+
+    server {
+        listen 80;
+        server_name api.localhost;
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    server {
+    listen 443 ssl;
+    server_name api.localhost;
     #listen 80;
     ssl_certificate /etc/nginx/localhost.crt;
     ssl_certificate_key /etc/nginx/localhost.key;

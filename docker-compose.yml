@@ -1,9 +1,14 @@
 version: '3.9'
 
 services:
-  timelog.dev:
-    image: ${DOCKER_REGISTRY-}timelogwebapp
+  timelog.web:
+    image: ${DOCKER_REGISTRY-}timelog.webapp
     build:
       context: .
-      dockerfile: Dockerfile      
+      dockerfile: Timelog.WebApp/Dockerfile    
+  timelog.api:
+    image: ${DOCKER_REGISTRY-}timelog.api
+    build:
+      context: .
+      dockerfile: Timelog.Api/Dockerfile  
   
