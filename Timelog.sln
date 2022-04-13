@@ -3,19 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.WebApp", "TimelogWebApp\Timelog.WebApp.csproj", "{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogCore", "TimelogCore\TimelogCore.csproj", "{618DF962-BD78-4412-8B4A-B7382C086CE0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelogServices", "ActivityComponent\TimelogServices.csproj", "{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.WebApp", "Timelog.WebApp\Timelog.WebApp.csproj", "{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Timelog.DbLayer", "Tests\Test.Timelog.DbLayer\Tests.Timelog.DbLayer.csproj", "{33D04BA8-41A2-48AE-A675-172EBBA7488E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Timelog.Services", "Tests\Tests.Timelog.Services\Tests.Timelog.Services.csproj", "{7DF6BB9B-24FE-463F-9530-6EAEC2F926EB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Timelog.WebApp", "Tests\Tests.Timelog.WebApp\Tests.Timelog.WebApp.csproj", "{23D87349-36DB-48B0-895B-B70ECFF85190}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{07C04430-96ED-4561-9264-83ADBB5BFDEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timelog.Core", "Timelog.Core\Timelog.Core.csproj", "{809FCC0F-707D-4526-AD31-FD789871345A}"
 EndProject
@@ -37,12 +31,6 @@ Global
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9592192E-08DD-4D42-BB6B-2FF1F823DFCF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{618DF962-BD78-4412-8B4A-B7382C086CE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F6A41F0-3724-4C1C-8A78-7DF7A9D464EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33D04BA8-41A2-48AE-A675-172EBBA7488E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{33D04BA8-41A2-48AE-A675-172EBBA7488E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D04BA8-41A2-48AE-A675-172EBBA7488E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,9 +43,6 @@ Global
 		{23D87349-36DB-48B0-895B-B70ECFF85190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23D87349-36DB-48B0-895B-B70ECFF85190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23D87349-36DB-48B0-895B-B70ECFF85190}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07C04430-96ED-4561-9264-83ADBB5BFDEE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{809FCC0F-707D-4526-AD31-FD789871345A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{809FCC0F-707D-4526-AD31-FD789871345A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{809FCC0F-707D-4526-AD31-FD789871345A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,6 +56,7 @@ Global
 		{9F804291-598E-475F-B15F-EF089761CACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F804291-598E-475F-B15F-EF089761CACC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E66B22-7CCF-4BA1-ABE6-50F86A99763E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{351FA28A-017B-4A59-9055-4BA194DF1D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

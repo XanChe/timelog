@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TimelogWebApp/Timelog.WebApp.csproj", "TimelogWebApp/"]
+COPY ["Timelog.WebApp/Timelog.WebApp.csproj", "Timelog.WebApp/"]
 COPY ["ActivityComponent/Timelog.Services.csproj", "ActivityComponent/"]
 COPY ["TimelogCore/Timelog.Core.csproj", "TimelogCore/"]
 RUN dotnet restore "TimelogWebApp/Timelog.WebApp.csproj"

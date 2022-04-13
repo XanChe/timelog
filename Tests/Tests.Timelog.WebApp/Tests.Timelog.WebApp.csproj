@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TimelogWebApp\Timelog.WebApp.csproj" />
+    <ProjectReference Include="..\..\Timelog.WebApp\Timelog.WebApp.csproj" />
   </ItemGroup>
 
 </Project>
