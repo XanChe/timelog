@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Timelog.AspNetCore\Timelog.AspNetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CommandRequests\" />
+  </ItemGroup>
+
 </Project>

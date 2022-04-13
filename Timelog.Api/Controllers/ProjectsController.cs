@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Timelog.AspNetCore.CommandRequests;
 using Timelog.AspNetCore.Services;
 using Timelog.AspNetCore.ViewModels;
 using Timelog.Core;
@@ -42,12 +43,12 @@ namespace Timelog.Api.Controllers
 
         // POST api/<ProjectsController>
         [HttpPost]
-        public async Task<ActionResult<ProjectViewModel>> Post(SaveProjectViewModel saveProjectViewModel)
+        public async Task<ActionResult<ProjectViewModel>> Post(SaveProjectRequest saveProjectRequest)
         {
             if (ModelState.IsValid)
             {
                 
-                var project = new Project() { Name = saveProjectViewModel.Name, Description = saveProjectViewModel.Description };
+                var project = new Project() { Name = saveProjectRequest.Name, Description = saveProjectRequest.Description };
                
                 await _projectManager.CreateAsync(project);
                 return Ok(project);
@@ -60,7 +61,7 @@ namespace Timelog.Api.Controllers
 
         // PUT api/<ProjectsController>/5
         [HttpPut("{guid}")]
-        public async Task<ActionResult<Project>> Put(string guid, SaveProjectViewModel saveProjectViewModel)
+        public async Task<ActionResult<Project>> Put(string guid, SaveProjectRequest saveProjectRequest)
         {
             if (ModelState.IsValid)
             {
@@ -68,8 +69,8 @@ namespace Timelog.Api.Controllers
                 {
 
                     Id = new Guid(guid),
-                    Name = saveProjectViewModel.Name,
-                    Description = saveProjectViewModel.Description
+                    Name = saveProjectRequest.Name,
+                    Description = saveProjectRequest.Description
                 };
                 await _projectManager.UpdateAsync(project);
                 return Ok(project);

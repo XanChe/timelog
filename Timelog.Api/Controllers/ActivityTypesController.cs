@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Timelog.AspNetCore.CommandRequests;
 using Timelog.AspNetCore.Services;
-using Timelog.AspNetCore.ViewModels;
 using Timelog.Core;
 using Timelog.Core.Entities;
 using Timelog.Core.Services;
@@ -42,7 +42,7 @@ namespace Timelog.Api.Controllers
 
         // POST api/<ActivityTypesController>
         [HttpPost]
-        public async Task<ActionResult<ActivityType>> Post(SaveActivityTypeViewModel saveActivityTypeViewModel)
+        public async Task<ActionResult<ActivityType>> Post(SaveActivityTypeRequest saveActivityTypeViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace Timelog.Api.Controllers
 
         // PUT api/<ActivityTypesController>/5
         [HttpPut("{guid}")]
-        public async Task<ActionResult<ActivityType>> Put(string guid, SaveProjectViewModel saveProjectViewModel)
+        public async Task<ActionResult<ActivityType>> Put(string guid, SaveProjectRequest saveProjectViewModel)
         {
             if (ModelState.IsValid)
             {

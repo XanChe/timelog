@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Timelog.Api.Responses;
+using Timelog.AspNetCore.CommandRequests;
 using Timelog.AspNetCore.Services;
 using Timelog.AspNetCore.ViewModels;
 using Timelog.Core;
-using Timelog.Core.Entities;
 using Timelog.Core.Services;
 
 namespace Timelog.Api.Controllers
@@ -42,20 +43,51 @@ namespace Timelog.Api.Controllers
             return Ok(activity);
         }
 
+        // GET api/<ActivitiesController>/Current
+        [HttpGet("Current")]
+        public async Task<ActionResult<UserActivityViewModel>> GetCurrent()
+        {
+            var activity = await _activityManager.GetCurrentActivityIfExistAsync();
+            if (activity == null)
+            {
+                return NotFound();
+            }
+            return Ok(activity);
+        }
+
         // POST api/<ActivitiesController>/Start
         [HttpPost("Start")]
-        public async Task<ActionResult<UserActivityViewModel>> Start()
+        public async Task<ActionResult<ApiResponse>> Start(StartActivityRequest startRequest)
         {
             if (ModelState.IsValid)
-            {
-                              
+            {                            
 
-                 await _activityManager.StartNewActivityAsync(new Guid("3c83bdbd-08bd-4d64-a8cb-ee947fe2a19c"), new Guid("50276063-9a51-48d0-8128-ddc8248bb746"));
-                return Ok(await _activityManager.GetCurrentActivityIfExistAsync());
+                await _activityManager.StartNewActivityAsync(startRequest.ProjectId, startRequest.ActivityTypeId);
+                var currentActivity = await _activityManager.GetCurrentActivityIfExistAsync();
+
+                return Ok(new ApiResponse(ResponseStatus.success, "Activity started", currentActivity));
             }
             else
             {
-                return BadRequest();
+                return BadRequest(new ApiResponse(ResponseStatus.error, ModelState.ErrorCount.ToString()));
+            }
+        }
+        // POST api/<ActivitiesController>/Start
+        [HttpPost("Stop")]
+        public async Task<ActionResult<ApiResponse>> Stop(StopCurrentActivityRequest stopRequest)
+        {
+            var currentActivity = await _activityManager.GetCurrentActivityIfExistAsync();
+            if (currentActivity != null)
+            {
+
+
+                await _activityManager.StopCurrentActivityIfExistAsync(stopRequest.Comment);
+
+                return Ok(new ApiResponse(ResponseStatus.success, $"Stopped with comment: '{stopRequest.Comment}'"));
+            }
+            else
+            {
+                return BadRequest(new ApiResponse(ResponseStatus.error, "no started activity"));
             }
         }
     }
