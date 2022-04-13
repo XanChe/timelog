@@ -22,13 +22,13 @@ namespace TimelogWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var projectManager = _timelogService.CreateProjectService();
-            //var activityTypeManager = _timelogService.CreateActivityTypeService();
-                       
+            var projectManager = _timelogService.CreateProjectService();
+            var activityTypeManager = _timelogService.CreateActivityTypeService();
 
-            //ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
-            //ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
-            
+
+            ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
+            ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
+
             //var activities = _activityManager.GetActivities().ToList();
             return View(await _activityManager.GetActivitiesAsync());
         }
@@ -52,11 +52,11 @@ namespace TimelogWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Start(Guid projectId, Guid activityTypeId)
+        public async Task<IActionResult> Start(Guid projectId, Guid activityTypeId)
         {
             if (ModelState.IsValid)
             {
-                var startedActivity = _activityManager.StartNewActivityAsync(projectId, activityTypeId);                
+                var startedActivity = await _activityManager.StartNewActivityAsync(projectId, activityTypeId);                
             }
             return RedirectToAction("Index");
         }

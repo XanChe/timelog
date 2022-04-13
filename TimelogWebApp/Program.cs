@@ -4,12 +4,14 @@ using Timelog.AspNetCore.Services;
 using Timelog.AspNetCore.Extensions;
 using Timelog.AspNetCore;
 using Timelog.AspNetCore.Models;
+using Timelog.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
+builder.Services.AddDbContext<TimelogDbContext>(options =>
+    options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 

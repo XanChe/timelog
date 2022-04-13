@@ -15,7 +15,7 @@ namespace Timelog.WebApp.Controllers.Components
             _timelogServiceBuilder = timelogAspService.TimelogServiceBuilder;
             _activityManager = _timelogServiceBuilder.CreateUserActivityService();
         }        
-        public async Task<IViewComponentResult> Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var currentActivity = await _activityManager.GetCurrentActivityIfExistAsync();
             if (currentActivity == null)
