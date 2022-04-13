@@ -10,7 +10,7 @@ services:
     expose:      
       - 44392 
     volumes:
-      - ./DeployConfigs/usersecrets:/root/.microsoft/usersecrets:ro
+      - ./DeployConfigs/usersecrets:/root/.microsoft/usersecrets/aspnet-TimelogWebApp-115AC0D9-5802-4B5A-B963-65511911A589:ro
       - ./DeployConfigs/https/localhost.pfx:/root/.aspnet/https/localhost.pfx      
     depends_on:
       - postgres_db
@@ -25,7 +25,7 @@ services:
     expose:      
       - 44393 
     volumes:
-      - ./DeployConfigs/usersecrets:/root/.microsoft/usersecrets:ro
+      - ./DeployConfigs/usersecrets:/root/.microsoft/usersecrets/835b381c-74b5-4890-ad24-101a80644966:ro
       - ./DeployConfigs/https/localhost.pfx:/root/.aspnet/https/localhost.pfx      
     depends_on:
       - postgres_db
