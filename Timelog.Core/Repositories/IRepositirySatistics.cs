@@ -11,8 +11,8 @@ namespace Timelog.Core.Repositories
     public interface IRepositirySatistics
     {
         public void SetUser(Guid userIdentityGuid);
-        public Task<TotalStatisticsVewModel> GetTotalStatisticsForPeriodAsync(DateTime from, DateTime to);
-        public Task<IEnumerable<ProjectStatisticsViewModel>> GetProjectStatsForPeriodAsync(Project project, DateTime from, DateTime to);
-        public Task<IEnumerable<ActivityTypeStatisticsViewModel>> GetActivityTypeStatsForPeriodAsync(ActivityType activityType, DateTime from, DateTime to);
+        public Task<TotalStatisticsVewModel> GetTotalStatisticsForPeriodAsync(DateTime fromDate, DateTime toDate);
+        public Task<IEnumerable<ProjectStatViewModel>> GetProjectStatsForPeriodAsync(DateTime fromDate, DateTime toDate);
+        public Task<IEnumerable<ActivityTypeStatViewModel>> GetActivityTypeStatsForPeriodAsync(DateTime fromDate, DateTime toDate);
     }
 }

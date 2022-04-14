@@ -2,7 +2,7 @@
 
 namespace Timelog.Core.ViewModels
 {
-    public class ProjectStatisticsViewModel: TotalStatisticsVewModel
+    public class ProjectStatViewModel: TotalStatisticsVewModel
     {
         [Display(Name = "Проект")]
         public string ProjectName { get; set; } = String.Empty;

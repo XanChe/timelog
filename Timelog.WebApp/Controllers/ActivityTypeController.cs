@@ -20,15 +20,15 @@ namespace Timelog.WebApp.Controllers
             _activityTypeManager = _timelogServiceBuilder.CreateActivityTypeService();
         }
         // GET: ActivityTypeController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(_activityTypeManager.GetAllAsync());
+            return View(await _activityTypeManager.GetAllAsync());
         }
 
         // GET: ActivityTypeController/Details/5
-        public ActionResult Details(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            return View(_activityTypeManager.GetByIdAsync(id));
+            return View(await _activityTypeManager.GetByIdAsync(id));
         }
 
         // GET: ActivityTypeController/Create
@@ -40,13 +40,13 @@ namespace Timelog.WebApp.Controllers
         // POST: ActivityTypeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
                 var activityType = new ActivityType() { Name = collection["Name"], Description = collection["Description"] };
 
-                _activityTypeManager.CreateAsync(activityType);
+                await _activityTypeManager.CreateAsync(activityType);
 
 
                 return RedirectToAction(nameof(Index));
@@ -58,16 +58,16 @@ namespace Timelog.WebApp.Controllers
         }
 
         // GET: ActivityTypeController/Edit/5
-        public ActionResult Edit(Guid id)
+        public async Task<ActionResult> Edit(Guid id)
         {
             
-            return View(_activityTypeManager.GetByIdAsync(id));
+            return View(await _activityTypeManager.GetByIdAsync(id));
         }
 
         // POST: ActivityTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Guid id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Guid id, IFormCollection collection)
         {
             try
             {
@@ -77,34 +77,34 @@ namespace Timelog.WebApp.Controllers
                     Name = collection["Name"], 
                     Description = collection["Description"] 
                 };
-                _activityTypeManager.UpdateAsync(activityType);
+                await _activityTypeManager.UpdateAsync(activityType);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(_activityTypeManager.GetByIdAsync(id));
+                return View(await _activityTypeManager.GetByIdAsync(id));
             }
         }
 
         // GET: ActivityTypeController/Delete/5
-        public ActionResult Delete(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            return View(_activityTypeManager.GetByIdAsync(id));
+            return View(await _activityTypeManager.GetByIdAsync(id));
         }
 
         // POST: ActivityTypeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
+        public async Task<ActionResult> Delete(Guid id, IFormCollection collection)
         {
             try
             {
-                _activityTypeManager.DeleteAsync(id);
+                await _activityTypeManager.DeleteAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(_activityTypeManager.GetByIdAsync(id));
+                return View(await _activityTypeManager.GetByIdAsync(id));
             }
         }
     }

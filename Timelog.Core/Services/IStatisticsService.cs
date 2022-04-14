@@ -4,7 +4,8 @@ namespace Timelog.Core.Services
 {
     public interface IStatisticsService
     {
-        public Task<TotalStatisticsVewModel> GetTotalStatistics(DateTime from, DateTime to);
-        public Task<IEnumerable<ProjectStatisticsViewModel>> GetProjectStatistics(DateTime from, DateTime to);
+        public Task<TotalStatisticsVewModel> GetTotalStatisticsAsync(DateTime from, DateTime to);
+        public Task<IEnumerable<ProjectStatViewModel>> GetProjectStatisticsAsync(DateTime from, DateTime to);
+        public Task<IEnumerable<ActivityTypeStatViewModel>> GetActivityTypeStatisticsAsync(DateTime from, DateTime to);
     }
 }

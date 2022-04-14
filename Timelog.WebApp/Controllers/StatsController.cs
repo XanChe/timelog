@@ -15,14 +15,14 @@ namespace Timelog.WebApp.Controllers
             _timelogServiceBuilder = timelogAspService.TimelogServiceBuilder;
             _statisticsService = _timelogServiceBuilder.CreateStatisticsService();
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_statisticsService.GetTotalStatistics( new DateTime(2022, 3,1), DateTime.Now));
+            return View(await _statisticsService.GetTotalStatisticsAsync( new DateTime(2022, 3,1), DateTime.Now));
         }
 
-        public IActionResult ByProject()
+        public async Task<IActionResult> ByProject()
         {
-            return View(_statisticsService.GetProjectStatistics(new DateTime(2022, 3, 1), DateTime.Now));
+            return View(await _statisticsService.GetProjectStatisticsAsync(new DateTime(2022, 3, 1), DateTime.Now));
         }
     }
 }

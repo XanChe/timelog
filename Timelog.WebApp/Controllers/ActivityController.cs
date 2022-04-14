@@ -62,10 +62,32 @@ namespace TimelogWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Stop(string comment)
+        public async Task<IActionResult> Stop(string comment)
         {            
-            _activityManager.StopCurrentActivityIfExistAsync(comment); 
+            await _activityManager.StopCurrentActivityIfExistAsync(comment); 
             return RedirectToAction("Index");
+        }
+
+        // GET: ActivityController/Delete/5
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return View(await _activityManager.GetByIdAsync(id));
+        }
+
+        // POST: ActivityController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id, IFormCollection collection)
+        {
+            try
+            {
+                await _activityManager.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(await _activityManager.GetByIdAsync(id));
+            }
         }
 
     }

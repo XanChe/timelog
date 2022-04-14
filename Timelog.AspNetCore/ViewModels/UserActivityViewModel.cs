@@ -21,9 +21,7 @@ namespace Timelog.AspNetCore.ViewModels
                     EndTime = activity.EndTime,
                     Comment = activity.Comment,
                     Id = activity.Id,
-                    Status = activity.Status.ToString(),
-                    Project = activity.Project?.Name,
-                    ActivityType = activity.ActivityType.Name
+                    Status = activity.Status.ToString()                    
                 };
             }
             return null;                     

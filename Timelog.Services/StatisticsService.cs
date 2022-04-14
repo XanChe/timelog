@@ -14,15 +14,19 @@ namespace Timelog.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<TotalStatisticsVewModel> GetTotalStatistics(DateTime from, DateTime to)
+        public async Task<TotalStatisticsVewModel> GetTotalStatisticsAsync(DateTime from, DateTime to)
         {
             return await _unitOfWork.Satistics.GetTotalStatisticsForPeriodAsync(from, to);
         }
 
-        public async Task<IEnumerable<ProjectStatisticsViewModel>> GetProjectStatistics( DateTime from, DateTime to)
+        public async Task<IEnumerable<ProjectStatViewModel>> GetProjectStatisticsAsync( DateTime from, DateTime to)
         {
-            return await _unitOfWork.Satistics.GetProjectStatsForPeriodAsync(new Project(), from, to);
+            return await _unitOfWork.Satistics.GetProjectStatsForPeriodAsync(from, to);
         }
 
+        public async Task<IEnumerable<ActivityTypeStatViewModel>> GetActivityTypeStatisticsAsync(DateTime from, DateTime to)
+        {
+            return await _unitOfWork.Satistics.GetActivityTypeStatsForPeriodAsync(from, to);
+        }
     }
 }
