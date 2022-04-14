@@ -111,10 +111,10 @@ namespace Tests.Timelog.Component
         {
             var project = new Project() { Id = Guid.NewGuid(), Name = "nn" };
             var activityType = new ActivityType() { Id = Guid.NewGuid(), Name = "tt" };
-            _unitOfWork.Activities.Create(new UserActivity { Id = new Guid("e1067f3b-ebcb-4b4e-8f91-5fce1593933f"), Status = UserActivity.ActivityStatus.Complite, Project = project, ActivityType = activityType });
-            _unitOfWork.Activities.Create(new UserActivity {  Status = UserActivity.ActivityStatus.Complite, Project = project, ActivityType = activityType });
+            _unitOfWork.Activities.Create(new UserActivity { Id = new Guid("e1067f3b-ebcb-4b4e-8f91-5fce1593933f"), Status = ActivityStatus.Complite, Project = project, ActivityType = activityType });
+            _unitOfWork.Activities.Create(new UserActivity {  Status = ActivityStatus.Complite, Project = project, ActivityType = activityType });
 
-            _unitOfWork.Activities.Create(new UserActivity {  Status = UserActivity.ActivityStatus.Started, Project = project, ActivityType = activityType });
+            _unitOfWork.Activities.Create(new UserActivity {  Status = ActivityStatus.Started, Project = project, ActivityType = activityType });
             _unitOfWork.SaveChangesAsync();
 
             return new UserActivityService(_unitOfWork);

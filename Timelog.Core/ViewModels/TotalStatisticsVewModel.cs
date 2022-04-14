@@ -12,13 +12,17 @@ namespace Timelog.Core.ViewModels
         [Display(Name = "Количство подходов")]
         public long ActivityCount { get; set; } = 0;
         [Display(Name = "Суммарная длительность")]
-        public long DurationInSecondsTotal { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        public TimeSpan DurationInSecondsTotal { get; set; } 
         [Display(Name = "Средняя длительность")]
-        public long DurationInSecondsAvarage { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        public TimeSpan DurationInSecondsAvarage { get; set; } 
         [Display(Name = "Минимальная длительность")]
-        public long DurationInSecondsMin { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        public TimeSpan DurationInSecondsMin { get; set; } 
         [Display(Name = "Максимальная длительность")]
-        public long DurationInSecondsMax { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        public TimeSpan DurationInSecondsMax { get; set; } 
         [Display(Name = "Самый ранний старт")]
         public DateTime FirstActivity { get; set; } = DateTime.MinValue;
         [Display(Name = "Самый поздний финиш")]

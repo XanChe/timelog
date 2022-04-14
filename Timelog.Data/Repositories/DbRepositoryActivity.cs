@@ -23,7 +23,7 @@ namespace Timelog.Data.Repositories
                     activityType
                 })
                 .Where(x => x.activity.UserUniqId == UserGuid)
-                .Where(x => x.activity.Status != UserActivity.ActivityStatus.Complite)
+                .Where(x => x.activity.Status != ActivityStatus.Complite)
                 .OrderByDescending(a => a.activity.StartTime)
                 .FirstOrDefaultAsync();
             var currentActivity = row?.activity;

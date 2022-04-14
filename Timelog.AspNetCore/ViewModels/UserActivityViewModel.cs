@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Timelog.Core.Entities;
 
 namespace Timelog.AspNetCore.ViewModels
 {
     public class UserActivityViewModel
     {
-        public static implicit operator UserActivityViewModel(UserActivity activity)
+        public static implicit operator UserActivityViewModel?(UserActivity? activity)
         {
             if (activity != null)
             {

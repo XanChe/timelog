@@ -1,8 +1,25 @@
-﻿@model UserActivity
+﻿@model ActivityViewModel
 
 <div>
-    <h4>Активное дейчтвие</h4>
+    <h4>Активное действие</h4>
     <hr />
+    <span id="timerLabel" runat="server"></span>
+
+<script type="text/javascript">
+
+    function countdown() 
+    {
+        seconds = document.getElementById("timerLabel").innerHTML;
+        if (seconds > 0) 
+        {
+            document.getElementById("timerLabel").innerHTML = seconds - 1;
+            setTimeout("countdown()", 1000);
+        }
+    }
+
+    setTimeout("countdown()", 1000);
+
+</script>
      @using(Html.BeginForm("Stop", "Activity", FormMethod.Post))
 {
     <p>       
@@ -42,16 +59,16 @@
             @Html.DisplayFor(model => model.Comment)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+            @Html.DisplayNameFor(model => model.ProjectName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.Name)
+            @Html.DisplayFor(model => model.ProjectName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityType)
+            @Html.DisplayNameFor(model => model.ActivityTypeName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActivityType.Name)
+            @Html.DisplayFor(model => model.ActivityTypeName)
         </dd>
     </dl>
 </div>

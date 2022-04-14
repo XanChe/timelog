@@ -111,8 +111,8 @@ namespace Tests.Timelog.WebApp
         {
             return await Task.FromResult(new List<UserActivity>()
             {
-                new UserActivity { Title = "First action", Status = UserActivity.ActivityStatus.Complite},
-                new UserActivity { Title = "Second action", Status = UserActivity.ActivityStatus.Started}
+                new UserActivity { Title = "First action", Status = ActivityStatus.Complite},
+                new UserActivity { Title = "Second action", Status = ActivityStatus.Started}
             }.ToList());
         }
         private IEnumerable<Project> GetTestPrijects()

@@ -3,6 +3,7 @@ using Timelog.Core;
 using Timelog.Core.Entities;
 using Timelog.Core.Repositories;
 using Timelog.Core.Services;
+using Timelog.Core.ViewModels;
 
 namespace Timelog.Services
 {
@@ -13,26 +14,18 @@ namespace Timelog.Services
         public UserActivityService(IUnitOfWork unitOfWork) :base(unitOfWork.Activities)
         {
             _unitOfWork = unitOfWork;            
-        }
-
-        //public UserActivity GetActivityById(long Id)
-        //{
-        //    return _unitOfWork.Activities.Read(Id);
-        //}
-               
+        }              
         public bool IsDraft(UserActivity activity)
         {
-            return activity.Status == UserActivity.ActivityStatus.Draft;
+            return activity.Status == ActivityStatus.Draft;
         }
-
         public bool IsStarted(UserActivity activity)
         {
-            return activity.Status == UserActivity.ActivityStatus.Started;
+            return activity.Status == ActivityStatus.Started;
         }
-
         public bool IsComplite(UserActivity activity)
         {
-            return activity.Status == UserActivity.ActivityStatus.Complite;
+            return activity.Status == ActivityStatus.Complite;
         }
         public void Start(UserActivity activity)
         {
@@ -40,9 +33,9 @@ namespace Timelog.Services
         }
         public void Start(UserActivity activity, DateTime customStart)
         {
-            if (activity.Status == UserActivity.ActivityStatus.Draft)
+            if (activity.Status == ActivityStatus.Draft)
             {
-                activity.Status = UserActivity.ActivityStatus.Started;
+                activity.Status = ActivityStatus.Started;
                 activity.StartTime = customStart;
             }
         }
@@ -52,9 +45,9 @@ namespace Timelog.Services
         }
         public void Stop(UserActivity activity, DateTime customEnd)
         {
-            if (activity.Status == UserActivity.ActivityStatus.Started)
+            if (activity.Status == ActivityStatus.Started)
             {
-                activity.Status = UserActivity.ActivityStatus.Complite;
+                activity.Status = ActivityStatus.Complite;
                 activity.EndTime = customEnd;
             }
         }
@@ -69,7 +62,7 @@ namespace Timelog.Services
                 await _unitOfWork.Activities.SaveChangesAsync();
             }
         }
-        public async Task<UserActivity> StartNewActivityAsync(Guid projectId, Guid activityTypeId)
+        public async Task<ActivityViewModel?> StartNewActivityAsync(Guid projectId, Guid activityTypeId)
         {
             await StopPreviousActivityIfExistAsync();
             var newUserActivity = new UserActivity()
@@ -85,8 +78,7 @@ namespace Timelog.Services
 
             return newUserActivity;
         }
-
-        public async Task<UserActivity?> GetCurrentActivityIfExistAsync()
+        public async Task<ActivityViewModel?> GetCurrentActivityIfExistAsync()
         {
             return await _unitOfWork.Activities.getCurrentActivityAsync();
         }
@@ -104,9 +96,10 @@ namespace Timelog.Services
             }
         }
 
-        public async Task<IEnumerable<UserActivity>> GetActivitiesAsync()
-        {          
-            return await _unitOfWork.Activities.GetAllAsync();
+        public async Task<IEnumerable<ActivityViewModel?>> GetActivitiesAsync()
+        {
+            
+            return (await _unitOfWork.Activities.GetAllAsync()).Select(item => (ActivityViewModel?)item);
         }
     }
 }

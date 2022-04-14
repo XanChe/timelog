@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserActivity>
+﻿@model IEnumerable<ActivityViewModel>
 
 @{
     ViewData["Title"] = "View";
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                @Html.DisplayNameFor(model => model.Duration)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -28,10 +28,10 @@
                 @Html.DisplayNameFor(model => model.Comment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Project)
+                @Html.DisplayNameFor(model => model.ProjectName)
             </th>            
             <th>
-                @Html.DisplayNameFor(model => model.ActivityType)
+                @Html.DisplayNameFor(model => model.ActivityTypeName)
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
+                @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
@@ -55,10 +55,10 @@
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
+                @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ActivityType.Name)
+                @Html.DisplayFor(modelItem => item.ActivityTypeName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

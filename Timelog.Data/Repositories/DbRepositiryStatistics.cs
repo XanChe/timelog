@@ -1,12 +1,14 @@
 ﻿using Timelog.Core.ViewModels;
-using Timelog.Core.Entities;
 using Timelog.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Timelog.Core.Entities;
 
 namespace Timelog.Data.Repositories
 {
     public class DbRepositiryStatistics : IRepositirySatistics
     {
+        private static int COUNT_TICKS_IN_SECOND = 10_000_000;
+
         private readonly TimelogDbContext _context;
         private Guid userGuid;
        
@@ -14,13 +16,14 @@ namespace Timelog.Data.Repositories
         public DbRepositiryStatistics(TimelogDbContext context)
         {
             _context = context;
+            
         }
         public async Task<IEnumerable<ActivityTypeStatViewModel>> GetActivityTypeStatsForPeriodAsync(DateTime fromDate, DateTime toDate)
         {
             var items = await (
                 from a in _context.UserActivities
                 join t in _context.ActivityTypes on a.ActivityTypeId equals t.Id
-                where a.UserUniqId == userGuid && fromDate <= a.StartTime && a.StartTime <= toDate
+                where a.UserUniqId == userGuid && a.Status == ActivityStatus.Complite && fromDate <= a.StartTime && a.StartTime <= toDate
                 group a by new { a.ActivityTypeId, t.Name } into agroup
                 select new
                 {
@@ -45,10 +48,10 @@ namespace Timelog.Data.Repositories
                     FirstActivity = activityTypeActivities.FirstActivity,
                     LastActivity = activityTypeActivities.LastActivity,
                     ActivityCount = activityTypeActivities.ActivityCount,
-                    DurationInSecondsTotal = activityTypeActivities.DurationInSecondsTotal,
-                    DurationInSecondsAvarage = activityTypeActivities.DurationInSecondsAvarage,
-                    DurationInSecondsMin = activityTypeActivities.DurationInSecondsMin,
-                    DurationInSecondsMax = activityTypeActivities.DurationInSecondsMax
+                    DurationInSecondsTotal = new TimeSpan(activityTypeActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsAvarage = new TimeSpan(activityTypeActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsMin = new TimeSpan(activityTypeActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsMax = new TimeSpan(activityTypeActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
 
                 });
             }
@@ -61,7 +64,7 @@ namespace Timelog.Data.Repositories
             var items = await (
                 from a in _context.UserActivities
                 join p in _context.Projects on a.ProjectId equals p.Id
-                where a.UserUniqId == userGuid && fromDate <= a.StartTime && a.StartTime <= toDate
+                where a.UserUniqId == userGuid && a.Status == ActivityStatus.Complite && fromDate <= a.StartTime && a.StartTime <= toDate
                 group a by new { a.ProjectId, p.Name } into agroup
                 select new
                 {                    
@@ -86,10 +89,10 @@ namespace Timelog.Data.Repositories
                     FirstActivity = projectActivities.FirstActivity,
                     LastActivity = projectActivities.LastActivity,
                     ActivityCount = projectActivities.ActivityCount,
-                    DurationInSecondsTotal = projectActivities.DurationInSecondsTotal,
-                    DurationInSecondsAvarage = projectActivities.DurationInSecondsAvarage,
-                    DurationInSecondsMin = projectActivities.DurationInSecondsMin,
-                    DurationInSecondsMax = projectActivities.DurationInSecondsMax
+                    DurationInSecondsTotal = new TimeSpan(projectActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsAvarage = new TimeSpan(projectActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsMin = new TimeSpan(projectActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
+                    DurationInSecondsMax = new TimeSpan(projectActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
 
                 });               
             }
@@ -100,7 +103,7 @@ namespace Timelog.Data.Repositories
         {
             var filtredActivities = await _context
                 .UserActivities
-                .Where(activity => activity.UserUniqId == userGuid)
+                .Where(activity => activity.UserUniqId == userGuid && activity.Status == ActivityStatus.Complite)
                 .Where(activity => activity.StartTime > from && activity.EndTime < to)
                 .OrderBy(activity => activity.StartTime)
                 .Select(activity => new
@@ -115,10 +118,10 @@ namespace Timelog.Data.Repositories
                 FirstActivity = ( filtredActivities.First()).StartTime,
                 LastActivity = ( filtredActivities.Last()).EndTime,
                 ActivityCount = filtredActivities.Count(),
-                DurationInSecondsTotal = (long)filtredActivities.Sum(a => a.Duration),
-                DurationInSecondsAvarage = (long)filtredActivities.Average(a => a.Duration),
-                DurationInSecondsMin = (long)filtredActivities.Min(a => a.Duration),
-                DurationInSecondsMax = (long)filtredActivities.Max(a => a.Duration)
+                DurationInSecondsTotal = new TimeSpan((long)filtredActivities.Sum(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationInSecondsAvarage = new TimeSpan((long)filtredActivities.Average(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationInSecondsMin = new TimeSpan((long)filtredActivities.Min(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationInSecondsMax = new TimeSpan((long)filtredActivities.Max(a => a.Duration) * COUNT_TICKS_IN_SECOND)
             };
         }
 

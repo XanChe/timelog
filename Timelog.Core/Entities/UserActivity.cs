@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Timelog.Core.Entities
 {
+    public enum ActivityStatus
+    {
+        Draft,
+        Started,
+        Complite
+    }
     public class UserActivity : Entity
     {
         public UserActivity() { }
@@ -18,14 +24,7 @@ namespace Timelog.Core.Entities
             this.Status = other.Status;
             this.Project = project;
             this.ActivityType = activityType;
-        }
-
-        public enum ActivityStatus
-        {
-            Draft,
-            Started,
-            Complite
-        }
+        }        
 
         [Display(Name = "Начало")]
         public DateTime StartTime { get; set; }
