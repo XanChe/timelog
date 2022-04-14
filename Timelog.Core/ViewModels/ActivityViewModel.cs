@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Timelog.Core.Entities;
-using Timelog.Core.Tools;
 
 namespace Timelog.Core.ViewModels
 {

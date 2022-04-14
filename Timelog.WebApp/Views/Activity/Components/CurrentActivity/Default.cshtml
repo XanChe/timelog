@@ -9,70 +9,68 @@
 
     function countdown() 
     {
-        seconds = document.getElementById("timerLabel").innerHTML;
-        if (seconds > 0) 
-        {
-            document.getElementById("timerLabel").innerHTML = seconds - 1;
-            setTimeout("countdown()", 1000);
-        }
+        var totalSeconds = parseInt(document.getElementById("curr-duration").value) + 1;
+        
+        var barWide = Math.floor(totalSeconds / 36);        
+
+        if (totalSeconds > 3500) {
+           barWide = 95;
+        } 
+        var seconds = totalSeconds;
+        var hours = Math.floor(seconds / 3600);
+        seconds = seconds % 3600;
+        var minutes = Math.floor(seconds / 60);
+        seconds = seconds % 60;
+
+        document.getElementById("curr-duration").value = totalSeconds;
+        document.getElementById("time-progress-bar").style.width = barWide + "%";
+        document.getElementById("time-progress-bar-content").innerHTML = hours + ':' + minutes + ':' + seconds;
+        setTimeout("countdown()", 1000);
+        
     }
 
     setTimeout("countdown()", 1000);
 
 </script>
-     @using(Html.BeginForm("Stop", "Activity", FormMethod.Post))
+     
+@using(Html.BeginForm("Stop", "Activity", FormMethod.Post))
 {
+    @Html.TextBox("curr-duration", (int)Model.Duration.TotalSeconds)
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <input type="submit" value="Остановить" class="btn btn-primary" />
+    </div>
+    
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="progress">
+                <div id="time-progress-bar" class="progress-bar" role="progressbar" style="width: @((int)(Model.Duration.TotalSeconds / 36) - 5)%;" aria-valuenow="@Model.Duration.TotalSeconds" aria-valuemin="0" aria-valuemax="3600">
+                   <span id="time-progress-bar-content"> @Html.DisplayFor(model => model.Duration)</span>    
+                </div>
+            </div>
+        </div>        
+      </div>
+      <div class="row">
+           <div class="col-sm-2">
+              @Html.DisplayFor(model => model.StartTime)
+            </div>
+          <div class="col-8 col-sm-6">
+          @Html.DisplayFor(model => model.ProjectName)
+        </div>
+        <div class="col-4 col-sm-4">
+          @Html.DisplayFor(model => model.ActivityTypeName)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <p>       
         @Html.TextArea("comment")
-        <input type="submit" value="Остановить" />
+        
     </p>
 }
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd class = "col-sm-10">
-            --
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityTypeName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActivityTypeName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    
