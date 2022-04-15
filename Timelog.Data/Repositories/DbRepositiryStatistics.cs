@@ -99,7 +99,7 @@ namespace Timelog.Data.Repositories
             return listReult;
         }
 
-        public async Task<TotalStatisticsVewModel> GetTotalStatisticsForPeriodAsync(DateTime from, DateTime to)
+        public async Task<TotalStatisticsVewModel?> GetTotalStatisticsForPeriodAsync(DateTime from, DateTime to)
         {
             var filtredActivities = await _context
                 .UserActivities
@@ -112,17 +112,22 @@ namespace Timelog.Data.Repositories
                     EndTime = activity.EndTime,
                     Duration = (activity.EndTime - activity.StartTime).TotalSeconds
                 }).ToListAsync();
-
-            return new TotalStatisticsVewModel()
+            if (filtredActivities.Count() > 0)
             {
-                FirstActivity = ( filtredActivities.First()).StartTime,
-                LastActivity = ( filtredActivities.Last()).EndTime,
-                ActivityCount = filtredActivities.Count(),
-                DurationTotal = new TimeSpan((long)filtredActivities.Sum(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationAvarage = new TimeSpan((long)filtredActivities.Average(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationMin = new TimeSpan((long)filtredActivities.Min(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationMax = new TimeSpan((long)filtredActivities.Max(a => a.Duration) * COUNT_TICKS_IN_SECOND)
-            };
+                return new TotalStatisticsVewModel()
+                {
+                    FirstActivity = (filtredActivities.FirstOrDefault()).StartTime,
+                    LastActivity = (filtredActivities.Last()).EndTime,
+                    ActivityCount = filtredActivities.Count(),
+                    DurationTotal = new TimeSpan((long)filtredActivities.Sum(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                    DurationAvarage = new TimeSpan((long)filtredActivities.Average(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                    DurationMin = new TimeSpan((long)filtredActivities.Min(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                    DurationMax = new TimeSpan((long)filtredActivities.Max(a => a.Duration) * COUNT_TICKS_IN_SECOND)
+                };
+            }
+
+            return null;
+           
         }
 
         public void SetUser(Guid userIdentityGuid)
