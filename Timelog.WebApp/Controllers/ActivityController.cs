@@ -29,7 +29,7 @@ namespace TimelogWebApp.Controllers
             ViewBag.Projects = new SelectList(await projectManager.GetAllAsync(), "Id", "Name");
             ViewBag.ActivityTypes = new SelectList(await activityTypeManager.GetAllAsync(), "Id", "Name");
             
-            return View(await _activityManager.GetActivitiesAsync());
+            return View((await _activityManager.GetActivitiesAsync()).ToList());
         }
 
         // GET: ActivityController/Details/5

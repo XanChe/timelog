@@ -14,6 +14,7 @@ using Timelog.AspNetCore.Services;
 using Timelog.Core.Entities;
 using Timelog.AspNetCore.Models;
 using System.Threading.Tasks;
+using Timelog.Core.ViewModels;
 
 namespace Tests.Timelog.WebApp
 {
@@ -61,13 +62,13 @@ namespace Tests.Timelog.WebApp
 
             //Assert
             var veiwResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<UserActivity>>(veiwResult.Model);
+            var model = Assert.IsAssignableFrom<List<ActivityViewModel>>(veiwResult.Model);
             Assert.Equal((await GetTestActivities()).Count(), model.Count());
 
         }
 
         [Fact]
-        public void StartActivityReturnRedirectAndStartActivity()
+        public async Task StartActivityReturnRedirectAndStartActivity()
         {
             var mockRepository = new Mock<IRepositoryActivity>();          
 
@@ -78,7 +79,7 @@ namespace Tests.Timelog.WebApp
 
 
             //Action
-            var result = controller.Start(TEST_ID_1, TEST_ID_2);
+            var result = await controller.Start(TEST_ID_1, TEST_ID_2);
 
             //Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
@@ -89,7 +90,7 @@ namespace Tests.Timelog.WebApp
 
         }
         [Fact]
-        public void StopActivityReturnRedirectAndStopActivity()
+        public async Task StopActivityReturnRedirectAndStopActivity()
         {
             var mockRepository = new Mock<IRepositoryActivity>();
 
@@ -98,7 +99,7 @@ namespace Tests.Timelog.WebApp
             var timelogAspService = new TimelogAspService(new TimelogServiceBuilder(repoManager), _httpContextAccessor, _mockUserManagerr);
             var controller = new ActivityController(timelogAspService);
             //Action
-            var result = controller.Stop("Stop Comment");
+            var result = await controller.Stop("Stop Comment");
             //Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Null(redirectToActionResult.ControllerName);
