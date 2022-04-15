@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace TimelogWebApp.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         UserManager<IdentityUser> _userManager;
@@ -13,7 +14,7 @@ namespace TimelogWebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View(_userManager.Users.ToList());
+            return View();
         }
     }
 }

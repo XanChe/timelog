@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Timelog.AspNetCore.CommandRequests;
 using Timelog.AspNetCore.Services;
 using Timelog.Core;
@@ -7,6 +8,7 @@ using Timelog.WebApp.ViewModels;
 
 namespace Timelog.WebApp.Controllers
 {
+    [Authorize]
     public class StatsController : Controller
     {
         private ITimelogServiceBuilder _timelogServiceBuilder;
