@@ -1,29 +1,40 @@
-﻿@model IEnumerable<Timelog.Core.ViewModels.ProjectStatViewModel>
+﻿@using Timelog.WebApp.ViewModels
+@model StatsByProjectViewModel
 
 @{
     ViewData["Title"] = "Статистика по проектам";
 }
 
 <h1>Статистика с групировкой по проектам</h1>
+@using(Html.BeginForm("ByProject", "Stats", FormMethod.Post))
+{
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">@Html.EditorFor(model => model.StatsRequest.FromDate)</div>
+        <div class="col-md-2">@Html.EditorFor(model => model.StatsRequest.ToDate)</div>
+        <div class="col-md-1"><input type="submit" value="Применить" class="btn btn-primary" /></div>
+    </div>
+</div>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
+                @Html.DisplayNameFor(model => model.ProjectItems.FirstOrDefault().ProjectName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityCount)
+                @Html.DisplayNameFor(model => model.ProjectItems.FirstOrDefault().ActivityCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DurationInSecondsTotal)
+                @Html.DisplayNameFor(model => model.ProjectItems.FirstOrDefault().DurationTotal)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DurationInSecondsAvarage)
+                @Html.DisplayNameFor(model => model.ProjectItems.FirstOrDefault().DurationAvarage)
             </th>            
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ProjectItems) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
@@ -32,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.ActivityCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DurationInSecondsTotal)
+                @Html.DisplayFor(modelItem => item.DurationTotal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DurationInSecondsAvarage)
+                @Html.DisplayFor(modelItem => item.DurationAvarage)
             </td>            
         </tr>}
     </tbody>

@@ -1,50 +1,61 @@
-﻿@model Timelog.Core.ViewModels.TotalStatisticsVewModel
+﻿@using Timelog.WebApp.ViewModels
+@model StatsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Общая статистика";
 }
 
-<h1>Details</h1>
-
+<h1>Общая статистика</h1>
+@using(Html.BeginForm("Index", "Stats", FormMethod.Post))
+{
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">@Html.EditorFor(model => model.StatsRequest.FromDate)</div>
+        <div class="col-md-2">@Html.EditorFor(model => model.StatsRequest.ToDate)</div>
+        <div class="col-md-1"><input type="submit" value="Применить" class="btn btn-primary" /></div>
+    </div>
+</div>
+}
 <div>
-    <h4>ActivityType</h4>
+    <h4>Общая статистика</h4>
+    
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstActivity)
+            @Html.DisplayNameFor(model => model.TotalStats.FirstActivity)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstActivity)
+            @Html.DisplayFor(model => model.TotalStats.FirstActivity)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastActivity)
+            @Html.DisplayNameFor(model => model.TotalStats.LastActivity)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastActivity)
+            @Html.DisplayFor(model => model.TotalStats.LastActivity)
         </dd> 
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationInSecondsTotal)
+            @Html.DisplayNameFor(model => model.TotalStats.DurationTotal)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DurationInSecondsTotal)
+            @Html.DisplayFor(model => model.TotalStats.DurationTotal)
         </dd>  
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationInSecondsAvarage)
+            @Html.DisplayNameFor(model => model.TotalStats.DurationAvarage)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DurationInSecondsAvarage)
+            @Html.DisplayFor(model => model.TotalStats.DurationAvarage)
         </dd>  
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationInSecondsMax)
+            @Html.DisplayNameFor(model => model.TotalStats.DurationMax)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DurationInSecondsMax)
+            @Html.DisplayFor(model => model.TotalStats.DurationMax)
         </dd>  
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationInSecondsMin)
+            @Html.DisplayNameFor(model => model.TotalStats.DurationMin)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DurationInSecondsMin)
+            @Html.DisplayFor(model => model.TotalStats.DurationMin)
         </dd>  
     </dl>
 </div>

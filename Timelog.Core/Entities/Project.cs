@@ -10,7 +10,7 @@ namespace Timelog.Core.Entities
         public string Name { get; set; } = String.Empty;
 
         [Display(Name = "Описание")]
-        public string Description {get; set; } = String.Empty;
+        public string? Description {get; set; } 
     }
 
 }  

@@ -8,6 +8,6 @@ namespace Timelog.Core.Entities
         [Display(Name = "Название")]
         public string Name { get; set; } = String.Empty;
         [Display(Name = "Описание")]
-        public string Description { get; set; } = String.Empty;
+        public string? Description { get; set; }
     }
 }  

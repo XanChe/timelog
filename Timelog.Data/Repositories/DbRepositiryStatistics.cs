@@ -48,10 +48,10 @@ namespace Timelog.Data.Repositories
                     FirstActivity = activityTypeActivities.FirstActivity,
                     LastActivity = activityTypeActivities.LastActivity,
                     ActivityCount = activityTypeActivities.ActivityCount,
-                    DurationInSecondsTotal = new TimeSpan(activityTypeActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsAvarage = new TimeSpan(activityTypeActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsMin = new TimeSpan(activityTypeActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsMax = new TimeSpan(activityTypeActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
+                    DurationTotal = new TimeSpan(activityTypeActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
+                    DurationAvarage = new TimeSpan(activityTypeActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
+                    DurationMin = new TimeSpan(activityTypeActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
+                    DurationMax = new TimeSpan(activityTypeActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
 
                 });
             }
@@ -89,10 +89,10 @@ namespace Timelog.Data.Repositories
                     FirstActivity = projectActivities.FirstActivity,
                     LastActivity = projectActivities.LastActivity,
                     ActivityCount = projectActivities.ActivityCount,
-                    DurationInSecondsTotal = new TimeSpan(projectActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsAvarage = new TimeSpan(projectActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsMin = new TimeSpan(projectActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
-                    DurationInSecondsMax = new TimeSpan(projectActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
+                    DurationTotal = new TimeSpan(projectActivities.DurationInSecondsTotal * COUNT_TICKS_IN_SECOND),
+                    DurationAvarage = new TimeSpan(projectActivities.DurationInSecondsAvarage * COUNT_TICKS_IN_SECOND),
+                    DurationMin = new TimeSpan(projectActivities.DurationInSecondsMin * COUNT_TICKS_IN_SECOND),
+                    DurationMax = new TimeSpan(projectActivities.DurationInSecondsMax * COUNT_TICKS_IN_SECOND)
 
                 });               
             }
@@ -118,10 +118,10 @@ namespace Timelog.Data.Repositories
                 FirstActivity = ( filtredActivities.First()).StartTime,
                 LastActivity = ( filtredActivities.Last()).EndTime,
                 ActivityCount = filtredActivities.Count(),
-                DurationInSecondsTotal = new TimeSpan((long)filtredActivities.Sum(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationInSecondsAvarage = new TimeSpan((long)filtredActivities.Average(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationInSecondsMin = new TimeSpan((long)filtredActivities.Min(a => a.Duration) * COUNT_TICKS_IN_SECOND),
-                DurationInSecondsMax = new TimeSpan((long)filtredActivities.Max(a => a.Duration) * COUNT_TICKS_IN_SECOND)
+                DurationTotal = new TimeSpan((long)filtredActivities.Sum(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationAvarage = new TimeSpan((long)filtredActivities.Average(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationMin = new TimeSpan((long)filtredActivities.Min(a => a.Duration) * COUNT_TICKS_IN_SECOND),
+                DurationMax = new TimeSpan((long)filtredActivities.Max(a => a.Duration) * COUNT_TICKS_IN_SECOND)
             };
         }
 

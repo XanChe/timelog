@@ -1,10 +1,21 @@
 ﻿@using(Html.BeginForm("Start", "Activity", FormMethod.Post))
-{
-    <p>
-        <label>Проект</label>
-        @Html.DropDownList("projectid", ViewBag.Projects as SelectList)
-        <label>Тип активности</label>
-        @Html.DropDownList("activityTypeId", ViewBag.ActivityTypes as SelectList)
-        <input type="submit" value="Старт!" />
-    </p>
+{   
+ <div class="container">
+    <div class="col-sm-8"> 
+        <div class="row">
+            <div class="col-sm-2">
+                <input type="submit" value="Старт!" class="btn btn-primary" />
+            </div>
+            <div class="col-sm-3">
+                <label>Проект</label>
+                @Html.DropDownList("projectid", ViewBag.Projects as SelectList)
+            </div>
+            <div class="col-sm-3">
+                <label>Тип активности</label>
+                @Html.DropDownList("activityTypeId", ViewBag.ActivityTypes as SelectList)
+            </div>       
+        </div>
+    </div>
+</div>
+    
 }

@@ -63,7 +63,7 @@ namespace TimelogWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Stop(string comment)
         {            
-            await _activityManager.StopCurrentActivityIfExistAsync(comment); 
+            await _activityManager.StopCurrentActivityIfExistAsync(comment ?? ""); 
             return RedirectToAction("Index");
         }
 

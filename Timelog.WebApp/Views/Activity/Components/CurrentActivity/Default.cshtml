@@ -9,9 +9,15 @@
 
     function countdown() 
     {
+        var maxValueInSeconds =  parseInt(document.getElementById("max-duration").value); 
         var totalSeconds = parseInt(document.getElementById("curr-duration").value) + 1;
         
-        var barWide = Math.floor(totalSeconds / 36);        
+        if (totalSeconds >= maxValueInSeconds * 0.80){
+            maxValueInSeconds = maxValueInSeconds * 1.3;
+            document.getElementById("max-duration").value = maxValueInSeconds;
+        }
+
+        var barWide = Math.floor((totalSeconds / maxValueInSeconds) * 100);        
 
         if (totalSeconds > 3500) {
            barWide = 95;
@@ -20,7 +26,7 @@
         var hours = Math.floor(seconds / 3600);
         seconds = seconds % 3600;
         var minutes = Math.floor(seconds / 60);
-        seconds = seconds % 60;
+        seconds = seconds % 60;        
 
         document.getElementById("curr-duration").value = totalSeconds;
         document.getElementById("time-progress-bar").style.width = barWide + "%";
@@ -32,22 +38,23 @@
     setTimeout("countdown()", 1000);
 
 </script>
-     
+    
 @using(Html.BeginForm("Stop", "Activity", FormMethod.Post))
 {
-    @Html.TextBox("curr-duration", (int)Model.Duration.TotalSeconds)
+    @Html.Hidden("curr-duration", (int)Model.Duration.TotalSeconds)
+    @Html.Hidden("max-duration", 300)
 <div class="container">
   <div class="row">
     <div class="col-sm-2">
       <input type="submit" value="Остановить" class="btn btn-primary" />
     </div>
     
-    <div class="col-sm-8">
+    <div class="col-sm-8">             
       <div class="row">
         <div class="col-12 col-sm-12">
-            <div class="progress">
-                <div id="time-progress-bar" class="progress-bar" role="progressbar" style="width: @((int)(Model.Duration.TotalSeconds / 36) - 5)%;" aria-valuenow="@Model.Duration.TotalSeconds" aria-valuemin="0" aria-valuemax="3600">
-                   <span id="time-progress-bar-content"> @Html.DisplayFor(model => model.Duration)</span>    
+            <div class="progress blue">
+                <div id="time-progress-bar" class="progress-bar" role="progressbar" style="width: @((int)(Model.Duration.TotalSeconds / 300) )%; background:#1a4966;" >
+                   <div id="time-progress-bar-content" class="progress-value">@Html.DisplayFor(model => model.Duration)</div>    
                 </div>
             </div>
         </div>        
