@@ -6,6 +6,7 @@ using Timelog.AspNetCore.CommandRequests;
 using Timelog.AspNetCore.Services;
 using Timelog.AspNetCore.ViewModels;
 using Timelog.Core;
+using Timelog.Core.Entities;
 using Timelog.Core.Services;
 
 namespace Timelog.Api.Controllers
@@ -65,7 +66,7 @@ namespace Timelog.Api.Controllers
                 await _activityManager.StartNewActivityAsync(startRequest.ProjectId, startRequest.ActivityTypeId);
                 var currentActivity = await _activityManager.GetCurrentActivityIfExistAsync();
 
-                return Ok(new ApiResponse(ResponseStatus.success, "Activity started", currentActivity));
+                return Ok(new ApiResponse(ResponseStatus.success, "Activity started", currentActivity?.MapToUserActivity()));
             }
             else
             {

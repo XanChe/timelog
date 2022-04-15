@@ -4,7 +4,8 @@ using Timelog.Core.Entities;
 namespace Timelog.Core.ViewModels
 {
     public class ActivityViewModel
-    {        
+    {
+        public ActivityStatus Status { get; set; } 
         public Guid Id { get; set; }
         [Display(Name = "Начало")]
         public DateTime StartTime { get; set; }
@@ -14,7 +15,7 @@ namespace Timelog.Core.ViewModels
         [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }
         [Display(Name = "Статус")]
-        public string Status { get; set; } = String.Empty;
+        public string StatusAsString { get; set; } = String.Empty;
         [Display(Name = "Заголовок")]
         public string Title { get; set; } = String.Empty;
         [Display(Name = "Комментарий")]
@@ -44,7 +45,8 @@ namespace Timelog.Core.ViewModels
                     Duration = duration,
                     Comment = activity.Comment,
                     Id = activity.Id,
-                    Status = activity.Status.ToString(),
+                    Status = activity.Status,
+                    StatusAsString = activity.Status.ToString(),
                     ProjectId = activity.ProjectId,
                     ProjectName = activity?.Project?.Name ?? "",
 #nullable disable
@@ -56,6 +58,22 @@ namespace Timelog.Core.ViewModels
             return null;
         }
 
-       
+        public UserActivity MapToUserActivity()
+        {
+            return new UserActivity()
+            {
+                Title = this.Title,
+                StartTime = this.StartTime,
+                EndTime = this.EndTime,
+                Comment = this.Comment,
+                Id = this.Id,
+                Status = this.Status,
+                ProjectId = this.ProjectId,
+                ActivityTypeId = this.ActivityTypeId
+                
+            };
+        }
+
+
     }
 }
