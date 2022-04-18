@@ -8,7 +8,6 @@ using System.Text;
 using Timelog.AspNetCore.Extensions;
 using Timelog.AspNetCore.Models;
 using Timelog.AspNetCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
