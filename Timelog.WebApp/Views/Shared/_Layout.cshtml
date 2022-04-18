@@ -35,7 +35,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="ByProject">Статистика по проектам</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="swagger" asp-host="@("api." + Context.Request.Host)" asp-protocol="https">API</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="swagger" asp-host="@("api." + Context.Request.Host)" asp-action="index.html" asp-protocol="https">API</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
