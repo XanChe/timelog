@@ -44,7 +44,7 @@ namespace Timelog.Data
         public void UseUserFilter(Guid userIdentityGuid)
         {
             _projectRepository.SetUser(userIdentityGuid);
-            _activityTypeRepository.SetUser(userIdentityGuid);
+           // _activityTypeRepository.SetUser(userIdentityGuid);
             _activityRepository.SetUser(userIdentityGuid);
             _statisticsRepository.SetUser(userIdentityGuid);
         }

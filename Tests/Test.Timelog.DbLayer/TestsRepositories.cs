@@ -73,7 +73,7 @@ namespace Test.Timelog.DbLayer
 
             Assert.AreEqual("Testing", updatedProject.Name);
 
-            repo.Delete(newProject.Id);
+            repo.DeleteAsync(newProject.Id);
             _context.SaveChanges();
 
             var deletedProject = repo.Read(newProject.Id);

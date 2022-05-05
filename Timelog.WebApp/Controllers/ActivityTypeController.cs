@@ -4,11 +4,10 @@ using Timelog.AspNetCore.Services;
 using Timelog.Core;
 using Timelog.Core.Entities;
 using Timelog.Core.Services;
-using Timelog.Services;
 
 namespace Timelog.WebApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class ActivityTypeController : Controller
     {
         private ITimelogServiceBuilder _timelogServiceBuilder;
@@ -60,7 +59,7 @@ namespace Timelog.WebApp.Controllers
         // GET: ActivityTypeController/Edit/5
         public async Task<ActionResult> Edit(Guid id)
         {
-            
+
             return View(await _activityTypeManager.GetByIdAsync(id));
         }
 
@@ -71,11 +70,12 @@ namespace Timelog.WebApp.Controllers
         {
             try
             {
-                var activityType = new ActivityType() { 
+                var activityType = new ActivityType()
+                {
                     Id = id,
-                   // UniqId = new Guid(collection["UniqId"]),
-                    Name = collection["Name"], 
-                    Description = collection["Description"] 
+                    // UniqId = new Guid(collection["UniqId"]),
+                    Name = collection["Name"],
+                    Description = collection["Description"]
                 };
                 await _activityTypeManager.UpdateAsync(activityType);
                 return RedirectToAction(nameof(Index));

@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Timelog.Api.Settings;
-using Timelog.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Timelog.Api.Settings;
+using Timelog.AspNetCore;
 using Timelog.AspNetCore.Extensions;
 using Timelog.AspNetCore.Models;
-using Timelog.AspNetCore;
+using Timelog.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
